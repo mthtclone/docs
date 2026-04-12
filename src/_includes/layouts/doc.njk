@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{{ title or "Docs" }}</title>
+
+  <link rel="stylesheet" href="/assets/doc.css" />
+</head>
+
+<body>
+  <div id="backdrop"></div>
+  <header>
+    <nav>
+      <button id="menu-toggle">
+        <img src="/assets/img/chevron.svg" alt="Tog">
+      </button>
+
+      <div class="logo">
+          <a href="/">
+            <img src="/assets/img/ilc_logo.png" alt="International Leadership College">
+          </a>
+        </div>
+
+      <div class="search">
+        <input placeholder="Search..." />
+      </div>
+
+      <div class="version">v1.0</div>
+    </nav>
+  </header>
+
+  <div class="doc-page">
+
+    <aside class="sidebar">
+      <div class="doc-links">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/changelog/">Changelog</a></li>
+          <li><a href="/">Project Management</a></li>
+          <li><a href="/">Design Pattern</a></li>
+          <li><a href="/dep-dev/">Development</a></li>
+          <li><a href="/dep-dev/">Navigation Flow</a></li>
+          <li><a href="/maintainer/">Maintainer</a></li>
+        </ul>
+      </div>
+
+      <div class="sub-doc-links">
+        <ul>
+          <li><a href="/atty/">Accessibility</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="markdown-content">
+
+      <div class="content-desc">
+
+        {% if title %}
+          <h1>{{ title }}</h1>
+        {% endif %}
+
+        {{ content | safe }}
+
+      </div>
+
+    </main>
+
+    <aside class="right-sidebar">
+  <h3>On this page</h3>
+
+  <div id="toc"></div>
+</aside>
+
+  </div>
+
+</body>
+<script>
+  const btn = document.getElementById("menu-toggle");
+  const sidebar = document.querySelector(".sidebar");
+  const rightSidebar = document.querySelector(".right-sidebar");
+  const backdrop = document.getElementById("backdrop");
+
+  function closeAll() {
+    sidebar.classList.remove("open");
+    btn.classList.remove("open");
+    backdrop.classList.remove("active");
+
+    if (rightSidebar) {
+      rightSidebar.classList.remove("open");
+    }
+  }
+
+  btn.addEventListener("click", () => {
+    const isOpen = sidebar.classList.toggle("open");
+
+    btn.classList.toggle("open", isOpen);
+    backdrop.classList.toggle("active", isOpen);
+
+    if (rightSidebar) {
+      rightSidebar.classList.toggle("open", isOpen);
+    }
+  });
+
+  backdrop.addEventListener("click", closeAll);
+</script>
+</html>

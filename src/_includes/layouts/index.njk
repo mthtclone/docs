@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title }}</title>
+
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+
+<body>
+
+  <main class="page">
+
+    <div class="title">
+      {{ title }}
+    </div>
+
+    <div class="text">
+      {{ content | safe }}
+    </div>
+
+    <div class="links">
+      <a href="/changelog/">Changelog</a>
+      <a href="/dep-dev/">Project Management</a>
+      <a href="/dep-dev/">Design Pattern</a>
+      <a href="/dep-dev/">Development</a>
+      <a href="/dep-dev/">Navigation Flow</a>
+      <a href="/maintainer/">Maintainer</a>
+    </div>
+
+    <div class="links">
+      <a href="/atty/">Accessibility</a>
+    </div>
+
+  </main>
+
+</body>
+</html>
