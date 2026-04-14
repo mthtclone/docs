@@ -83,7 +83,7 @@ This is where **ARIA** comes in.
 
 You can think of **ARIA** as a communication layer between your UI and assistive technologies. It tells the browser, “this thing is a button,” or “this section is expanded,” or “this item is the current page,” even when the underlying HTML does not express that clearly.
 
-## How ARIA works conceptually
+### How ARIA works conceptually
 
 When a page is loaded, the browser (user agent) builds a representation of the page and exposes it to the operating system’s accessibility API. Assistive technologies like screen readers then read from that API.
 
@@ -97,7 +97,7 @@ This information allows assistive technologies to present content properly and e
 
 For example, when a collapsible section is built with JavaScript, **ARIA** can communicate whether it is currently expanded or collapsed. Without that, a screen reader user would have no idea what is happening.
 
-## Why ARIA must be used carefully
+### Why ARIA must be used carefully
 
 **ARIA** is powerful, but it is also easy to misuse.
 
@@ -125,7 +125,7 @@ Do not add **ARIA** just for the sake of it. If an element already has correct s
 Because of this, the best practice is always:
 Use native HTML first, then use **ARIA** only to refine or clarify meaning when needed.
 
-## Common ARIA attributes and their purpose
+### Common ARIA attributes and their purpose
 
 **aria-label** is used when an element needs a label but does not have visible text. This is common for icon-only controls, such as social media links or buttons that only contain an SVG. It provides a name that screen readers can announce.  
 
