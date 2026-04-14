@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Docs Control Panel</title>
+  <style>
+    body {
+      font-family: system-ui;
+      background: #121212;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: 12px;
+      width: 320px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #000000;
+      color: rgb(255, 255, 255);
+      font-weight: 600;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .status {
+      margin: 12px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Docs Control Panel</h2>
+
+  <div class="status" id="status">RUNNING</div>
+
+  <button onclick="openDocs()">Open Docs</button>
+  <button onclick="stopServer()">Stop Server</button>
+</div>
+
+<script>
+function openDocs() {
+  window.open('/', '_blank');
+}
+
+function stopServer() {
+  fetch('/stop').then(() => {
+    document.getElementById('status').innerText = 'STOPPING';
+  });
+}
+</script>
+
+</body>
+</html>
