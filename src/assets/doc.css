@@ -39,6 +39,12 @@
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
+
+  --box-shadow-cls: 
+  inset 0px 22px 20px -6px rgba(255, 255, 255, 0.04);
+
+  --box-shadow-pill:
+  inset 0px 7px 20px -6px rgb(255, 255, 255, 0.2);
 }
 
 * {
@@ -245,6 +251,10 @@ p code {
   list-style: none;
   padding: 0;
   margin: 0;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .toc li {
@@ -307,16 +317,16 @@ p code {
   display: inline-block;
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid currentColor;
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s ease;
   margin: .3rem;
+  color: var(--color-text-primary) !important;
+  background: #000;
 }
 
 .link-special:hover {
-  background: #000;
-  color: #fff;
+  box-shadow: var(--box-shadow-pill);
   text-decoration: none !important;
 }
 
@@ -333,6 +343,7 @@ p code {
 .link-card {
   display: block;
   padding: 1rem 1.2rem;
+  color: var(--color-text-primary) !important;
   border: 1px solid #ddd;
   border-radius: 10px;
   transition: 0.2s ease;
@@ -346,6 +357,139 @@ p code {
 .warning {
   color: #ff0000;
   font-weight: 700;
+}
+
+.pill-group {
+  display: flex;
+}
+
+.pill {
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 1px solid #a3a3a354;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pill:nth-child(1) { z-index: 3; }
+.pill:nth-child(2) { z-index: 2; }
+.pill:nth-child(3) { z-index: 1; }
+
+.pill + .pill {
+  margin-left: -5px;
+}
+
+.pill.ui {
+  background: #1e293b;
+  color: #93c5fd;
+}
+
+.pill.ux {
+  background: #052e16;
+  color: #86efac;
+}
+
+.pill.infra {
+  background: #2b1d0e;
+  color: #fbbf24;
+}
+
+.pill.doc {
+  background: #1e1b4b;
+  color: #c4b5fd;
+}
+
+.pill.content {
+  background: #3b0a1a;
+  color: #f9a8d4;
+}
+
+.pill.fix {
+  background: #3f1d1d;
+  color: #fca5a5;
+}
+
+.pill.api {
+  background: #082f49;
+  color: #7dd3fc;
+}
+
+.pill.backend {
+  background: #0f172a;
+  color: #cbd5e1;
+}
+
+.pill.frontend {
+  background: #052f2e;
+  color: #5eead4;
+}
+
+.pill.performance {
+  background: #1a2e05;
+  color: #bef264;
+}
+
+.pill.security {
+  background: #2a0f0f;
+  color: #fca5a5;
+}
+
+.pill.bug {
+  background: #2a0b12;
+  color: #fb7185;
+}
+
+.pill.feature {
+  background: #172554;
+  color: #93c5fd;
+}
+
+.pill.design {
+  background: #2a1235;
+  color: #f0abfc;
+}
+
+.pill.test {
+  background: #111827;
+  color: #9ca3af;
+}
+
+.pill.devops {
+  background: #1e1b4b;
+  color: #a5b4fc;
+}
+
+.pill.data {
+  background: #042f2e;
+  color: #5eead4;
+}
+
+.pill.accessibility {
+  background: #2a2300;
+  color: #fde047;
+}
+
+.pill.research {
+  background: #1f1b2e;
+  color: #ddd6fe;
+}
+
+.pill.refactor {
+  background: #1f2937;
+  color: #d1d5db;
+}
+
+.pill.experiment {
+  background: #2a1a0f;
+  color: #fdba74;
+}
+
+.pill.urgent {
+  background: #3a0f0f;
+  color: #fecaca;
 }
 
 /* =========================

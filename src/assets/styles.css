@@ -38,6 +38,9 @@
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
+
+  --box-shadow-cls: 
+    inset 0px 22px 20px -6px rgba(255, 255, 255, 0.04);
 }
 
 body {
@@ -101,7 +104,12 @@ body {
   }
   
   .links a:hover {
-    background: var(--color-hover);
+    box-shadow: var(--box-shadow-cls);
+    transform: translateY(-2px);
+  }
+
+  .sub-trees a:hover {
+    box-shadow: var(--box-shadow-cls);
     transform: translateY(-2px);
   }
   

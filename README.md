@@ -44,7 +44,7 @@ This small barebone Python server is built to run only `_site` and `control` fol
 
 Run in your terminal:
 ```
-python server.py # for debuggin
+python server.py # for debugging
 ```
 
 For background mode (no terminal window):
@@ -54,9 +54,9 @@ pythonw server.py
 
 5. Access the site
 
-Open your browser and visit, `http:localhost:4000` to access the doc site.
+Open your browser and visit, `http://localhost:4000` to access the doc site.
 
-`http:localhost:4000/control` is for a small control panel that you visit to stop the server. 
+`http://localhost:4000/control` is for a small control panel that you visit to stop the server. 
 
 You cannot turn off the server in terminal if you startup the server with `pythonw` as it is running in the background silently. So stopping it from the endpoint is the only way. 
 

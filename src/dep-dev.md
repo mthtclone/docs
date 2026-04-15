@@ -37,6 +37,81 @@ This accessibility section deserves its own dedicated space, where we explain fu
 
 [Accessibility Guidelines](/atty/){.link-card}
 
+
+## CSS Styling Guidelines
+
+This section defines the styling system used across the project. It establishes how structure, typography, layout, and reusable patterns should be handled to keep the codebase consistent, scalable, and easy to maintain.
+
+### Styling Philosophy
+
+The CSS architecture follows a layered approach. Each layer has a clear responsibility and should not overlap with others.
+
+The goal is to separate *layout*, *typography*, and *component-specific styling* so that changes in one area do not unintentionally break others.
+
+Instead of writing repeated styles in every section, shared patterns are abstracted into base classes, while page-specific classes handle structure and positioning.
+
+### Base Layer System
+
+The base layer is the foundation of all styling. It defines reusable rules that apply globally across the site.
+
+Take a look at `# about.css` file.
+
+This includes layout primitives such as `.section` for consistent spacing and structural rhythm, as well as flex utilities like `.flex-row`, `.flex-column`, and `.flex-center` for alignment control.
+
+Typography is handled through shared classes instead of repeated selectors. Headings use `.heading-primary`, body text uses `.text-body`, and emphasized text uses .text-accent.
+
+Media elements are standardized using `.img-responsive`, ensuring images scale correctly without needing repeated rules in every section.
+
+Buttons follow a shared `.btn` base class so that interaction styles remain consistent across the entire project.
+
+These base classes should never contain page-specific styling. They are strictly reusable building blocks.
+
+### Component Structure
+
+Each page section is treated as a standalone component. Components are responsible for layout and structural design only, not global typography or reusable styling rules.
+
+A component typically uses a block-style naming convention such as `.about__intro`, `.about__research`, or `.about__cta`.
+
+Inside each component, child elements describe their role within that section rather than relying on generic tags or reused class names without context.
+
+The responsibility of a component is to define how content is arranged, not how text or images are styled globally.
+
+### Typography Rules
+
+Typography is never hardcoded inside individual components unless it is a rare exception.
+
+Headings, paragraphs, and highlighted text must use the shared base classes whenever possible. This ensures consistency in font sizing, spacing, and hierarchy across all pages.
+
+If a component requires slight variation, it should extend a base class rather than redefining typography from scratch.
+
+This prevents duplication of font rules and avoids inconsistencies between sections.
+
+### Layout Rules
+
+Spacing between sections should be controlled using the .section class rather than repeated padding declarations in every component.
+
+Flexbox utilities should be used for alignment instead of redefining display rules repeatedly.
+
+Each component is responsible for its internal layout only. Global spacing and structure should always be inherited from base utilities.
+
+### Naming Conventions
+
+All class names must be lowercase and use a consistent structured format.
+
+Base classes remain simple and reusable, while component classes follow a block-style naming pattern with double underscores.
+
+Component names describe meaning, not layout artifacts. Names like `div1`, `text-box`, or `section2` are not allowed because they do not represent semantic structure.
+
+Instead, naming should reflect purpose, such as `about__intro`, `about__research`, or `about__cta`.
+
+### When adding new pages...
+
+As the project grows, new pages should reuse the existing base system rather than introducing new styling patterns.
+
+Before writing new CSS, the first step should always be checking whether a base class already solves the problem.
+
+If new patterns are introduced, they should be added to the base layer only if they are truly reusable across multiple sections or pages.
+
 ## Code Quality 
 
 The project uses two separate systems to keep the code clean and consistent.
@@ -88,7 +163,7 @@ In the `eslint.config.cjs` file,
 
 The project uses **ESLint** v10+, which requires `eslint.config.*` instead of .eslintrc.*
 
-```js
+```javascript
     const vue = require('eslint-plugin-vue');
     const prettier = require('eslint-config-prettier');
     

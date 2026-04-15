@@ -7,6 +7,7 @@
   <title>{{ title or "Docs" }}</title>
 
   <link rel="stylesheet" href="/assets/doc.css" />
+  <link rel="stylesheet" href="/assets/prism.css" />
 </head>
 
 <body>
@@ -75,7 +76,7 @@
   </div>
 
 </body>
-<script>
+<script type="module">
   const btn = document.getElementById("menu-toggle");
   const sidebar = document.querySelector(".sidebar");
   const rightSidebar = document.querySelector(".right-sidebar");
@@ -103,5 +104,8 @@
   });
 
   backdrop.addEventListener("click", closeAll);
+</script>
+<script src="../../assets/js/prism.js" defer>
+  Prism.highlightAll();
 </script>
 </html>
