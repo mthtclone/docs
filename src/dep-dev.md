@@ -37,7 +37,6 @@ This accessibility section deserves its own dedicated space, where we explain fu
 
 [Accessibility Guidelines](/atty/){.link-card}
 
-
 ## CSS Styling Guidelines
 
 This section defines the styling system used across the project. It establishes how structure, typography, layout, and reusable patterns should be handled to keep the codebase consistent, scalable, and easy to maintain.
@@ -64,6 +63,72 @@ Media elements are standardized using `.img-responsive`, ensuring images scale c
 
 Buttons follow a shared `.btn` base class so that interaction styles remain consistent across the entire project.
 
+```css
+/* Layout system */
+.section {
+  padding: 80px 120px;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gap-sm {
+  gap: 20px;
+}
+
+.gap-md {
+  gap: 40px;
+}
+
+.gap-lg {
+  gap: 50px;
+}
+
+/* Typography system */
+.heading-primary {
+  font-size: 40px;
+  font-family: var(--title-font);
+}
+
+.text-body {
+  font-size: var(--normal-font-size);
+  font-family: var(--body-font);
+  line-height: 1.4;
+}
+
+.text-accent {
+  color: var(--main-color);
+}
+
+/* Image system */
+.img-responsive {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Button system */
+.btn {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+}
+```
+
 These base classes should never contain page-specific styling. They are strictly reusable building blocks.
 
 ### Component Structure
@@ -71,6 +136,19 @@ These base classes should never contain page-specific styling. They are strictly
 Each page section is treated as a standalone component. Components are responsible for layout and structural design only, not global typography or reusable styling rules.
 
 A component typically uses a block-style naming convention such as `.about__intro`, `.about__research`, or `.about__cta`.
+
+```html
+<section
+        class="about__intro section"
+        role="region"
+        aria-labelledby="about-ilc-heading"
+       >
+        <div class="about__intro-text">
+          <h2 class="heading-primary" id="about_intro-heading">
+            Let Us Introduce <span class="text-accent">Ourselves</span>
+          </h2>
+  ... ... ... 
+```
 
 Inside each component, child elements describe their role within that section rather than relying on generic tags or reused class names without context.
 
