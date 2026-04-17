@@ -21,7 +21,7 @@ Correct semantic structure ensures that assistive technologies can build an accu
 
 Landmarks define the main regions of a page and allow users to navigate quickly using assistive technologies.
 
-Every page must include the following primary landmarks:
+Every page should include the following primary landmarks, when applicable:
 
 - `<header>` for site or page-level branding/navigation
 - `<nav>` for navigation menus
@@ -268,6 +268,113 @@ With standard HTML elements, keyboard behavior is already built in. Users can pr
 Problems arise when building custom components.
 
 Elements like tab systems, dropdown menus, and expandable panels often require custom interaction patterns. These patterns must be implemented manually to remain accessible.
+
+### Keyboard Access 
+
+All functionality must be fully operable using a keyboard.
+
+Some users rely on keyboards instead of a mouse, including users with motor disabilities and screen reader users.
+
+1. All interactive elements must be reachable using the `Tab` key.
+
+2. Users must be able to activate controls using standard keys:
+
+    - Enter for links and buttons
+    - Space for buttons and toggles
+    - The tab order must follow a logical and predictable sequence
+
+3. Users must not get “trapped” inside components (e.g., modals, dropdowns)
+
+Do not remove keyboard functionality from native elements.
+
+Avoid using tabindex values greater than 0, as this creates unpredictable navigation order.
+
+Custom components must implement full keyboard interaction patterns, including (i) focus management, (ii) key bindings (optional), (iii) escape behavior where approrpriate.
+
+If a feature cannot be used with a keyboard, it is not accessible.
+
+### Focus Visibility
+
+Keyboard users rely on visible focus indicators to understand where they are on the page.
+
+All interactive elements must have a clearly visible focus state.
+
+1. Do not remove the default browser outline unless you replace it with a custom focus style.
+
+2. Focus styles must have sufficient contrast against the background.
+
+3. Focus indicators must be visible in all states (default, hover, active).
+
+Use `:focus-visible` to apply focus styles only when needed, without affecting mouse users. If users cannot see where focus is, they cannot navigate.
+
+```css
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+```
+
+## Form Errors and Validation 
+
+Forms must clearly communicate errors and validation states to all users. This includes both visual users and users of assistive technologies.
+
+1. Errors must be described in text, not just colors.
+2. Error messages must be associated with the relevant input.
+3. Inputs with error should be programmatically identifiable (e.g `aria-invalid=true`).
+
+When validation fails, move focus to the first invalid field, or provide a clear error summary at the top of form.
+
+Use `aria-live` regions to announce errors when they appear. 
+
+Do not rely on placeholder text or visual cues alone to communicate errors.
+
+## Contrast
+
+Text and interactive elements must have sufficient contrast against their background.
+
+Low contrast makes content difficult or impossible to read for many users, including those with low vision or color blindness.
+
+Minimum guidelines:
+
+- Normal text should have a contrast ratio of at least 4.5:1
+- Large text (18px+ or bold 14px+) should have at least 3:1
+- Interactive elements (buttons, links, inputs) must be clearly distinguishable
+
+Do not rely on color alone to convey meaning.
+
+When in doubt, use tools to verify contrast ratios.
+
+## Skip Links
+
+Skip links allow keyboard users to bypass repetitive navigation and go directly to the main content.
+
+This is especially important for users who navigate using the keyboard or screen readers.
+
+Every page should include a skip link as the first focusable element.
+
+```html
+<a href="#main-content" class="skip-link">Skip to main content</a>
+```
+
+The target must match the id of the main content container:
+
+```html
+<main id="main-content">
+```
+
+Skip links can be visually hidden by default, but must become visible when focused.
+
+```css
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+```
 
 ## Remember this rule..
 
