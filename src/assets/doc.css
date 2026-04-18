@@ -52,6 +52,7 @@
 }
 
 html {
+  scroll-padding-top: 80px;
   scroll-behavior: smooth;
 }
 
@@ -254,7 +255,6 @@ p code {
   
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .toc li {
@@ -298,6 +298,29 @@ p code {
 }
 
 /* Special CSS */
+.note {
+  background: #111111;              
+  color: #e6e6e6;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid #4a90e2;   
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+
+  line-height: 1.6;
+  font-size: 0.95rem;
+
+  margin: 1.5rem 0;
+}
+
+.date {
+  font-size: 0.75em;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  border-bottom: 1px solid #fff;
+  text-align: right;
+}
+
 .link-primary {
   display: inline-flex;
   align-items: center;

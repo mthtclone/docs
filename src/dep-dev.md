@@ -571,22 +571,27 @@ The post-processing system consists of multiple scripts:
 
 Each script is executed in order and is designed to be **idempotent**, meaning it only performs work when necessary.
 
-### HTML Link Processing
+### HTML Link Processing 
+
+Last Update on 4/18/2026{.date}
 
 It scans every HTML file inside the dist/ directory and rewrites internal links so that they match the production server’s URL structure.
 
 The production server uses “pretty URLs,” meaning it does not expose .html files directly.
 
-Instead of `/src/about.html`, the final URL must be `/about`.
+Instead of `/pages/about.html`, the final URL must be `/about`.
 
-This requires rewriting links after the build, because Vite itself generates files based on source structure, not server routing rules.
+This rewriting step exists because the build output is generated as static files, while the server (Apache in production) applies routing rules that map clean URLs to those files.
 
-The script parses each HTML file inside dist/, finds all internal links, and rewrites them according to a defined mapping rule.
+The script parses each HTML file inside dist/, finds all internal href attributes, and rewrites them according to a normalization rule set. This ensures that all internal navigation remains consistent with the final deployed environment.
 
 Examples:
 
--   `/src/about.html` → `/about`
--   `/src/apply.html` → `/apply`
+-   `/pages/about.html` → `/about`
+-   `/pages/admission/apply.html` → `/admission/apply`
+-   `/programs/bachelor-of-science.html` → `/programs/bachelor-of-science`
+
+External links (e.g. https://...) and special protocols (mailto, tel, anchors) are ignored and left untouched.
 
 To avoid reprocessing everything every time, the script uses content hashing.
 
@@ -602,9 +607,17 @@ A cache directory is used to store these hash values so future runs can quickly 
 
 This avoids reprocessing unchanged files, which is critical when working with a large number of pages.
 
-### **Sitemap Generation**
+This step is not a link validator. It does not check whether routes exist or are reachable; it only ensures that internal links are correctly formatted for the production routing model before deployment.
 
-After links are rewritten, the system generates a sitemap.
+### **Sitemap Generation** 
+
+Last Update on 4/18/2026{.date}
+
+After link processing is completed, the system generates a sitemap.xml file inside the dist/ directory.
+
+The sitemap is built from a predefined set of routes that represent the public-facing structure of the website. These routes are defined at build time and reflect the intended navigation structure exposed to users and search engines.
+
+The sitemap is built from a predefined set of routes that represent the public-facing structure of the website. These routes are defined at build time and reflect the intended navigation structure exposed to users and search engines.
 
 The sitemap generator creates a clean `sitemap.xml` file inside `dist/`.
 
@@ -612,35 +625,17 @@ It includes all public-facing routes such as:
 
 -   `/`
 -   `/about`
--   `/apply`
+-   `/admission`
+-   `/admission/apply`
 -   `/contact`
 
-The sitemap is primarily used for search engines and auditing tools. It helps external systems understand the structure of the website.
+All routes are normalized into “pretty URL” format, meaning file extensions such as .html are removed and /pages/ prefixes are stripped when applicable. This matches the production server behavior, where Apache rewrite rules serve clean URLs instead of direct file paths.
 
-It is not required for the site to function. If it fails, the site will still work normally, but search engine indexing and structural visibility may be reduced.
+The final output is written as a standards-compliant XML sitemap (sitemap.xml) placed in the dist/ directory, making it ready for deployment without additional processing.
 
-### **Logging System**
+The sitemap is primarily used for search engines and external auditing tools. It helps them understand the structure and hierarchy of the site for indexing purposes.
 
-All post-processing activity is logged by `0_startup.py`.
-
-Each day generates a single log file:
-
-    logs/YYYY-MM-DD.log
-
-Format:
-
-    Author: >John Doe<  
-    2026-03-31 14:25:12  
-      
-    [2026-03-31 14:25:13] Started 1_process_links.py  
-    [2026-03-31 14:25:14] Finished 1_process_links.py successfully
-
-
--   Automatically detects the Git author (`git config user.name`)
--   Appends logs if run multiple times on the same day
--   Records failures and exit codes
--   Provides traceability for administrative auditing
-
+It is not required for the site to function. If generation fails or is skipped, the website will still operate normally, but search engine visibility and structural discovery may be reduced.
 
 ## Crafting New Scripts
 
@@ -666,3 +661,102 @@ When extending the pipeline, follow these principles to maintain performance and
 [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single-responsibility_principle){.link-special}
 [Atomic file write concept](https://en.wikipedia.org/wiki/Atomic_commit#File_systems){.link-special}
 [Idempotence in computing](https://en.wikipedia.org/wiki/Idempotence){.link-special}
+
+## Github Actions
+
+Last Updated on 4/19/2026{.date}
+
+GitHub Actions is a built-in automation system provided by GitHub that allows workflows to run automatically based on repository events such as pushes, pull requests, or scheduled triggers.
+
+It is used in this project to automate the build process, enforce code quality checks, and generate deployable output without requiring manual execution on a local machine.
+
+A workflow in GitHub Actions is defined using a YAML file placed inside the .github/workflows/ directory. Each workflow consists of one or more jobs, and each job contains a series of steps that run in sequence on a virtual machine environment provided by GitHub (in this case, Ubuntu).
+
+Workflows are triggered by events. For example, the build workflow in this project runs automatically whenever code is pushed to the main branch or when a pull request is opened.
+
+### Current Build Workflow 
+
+Last Updated on 4/19/2026{.date}
+
+The main workflow used in this project is the build pipeline defined in build.yml.
+
+This workflow is responsible for validating the codebase, building the project, and producing deployable static files stored in the dist/ directory.
+
+It runs the following sequence of steps:
+
+```yml
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run Prettier check
+        run: npx prettier --check .
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload artifact (latest)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-backup-${{ github.sha }}
+          path: dist/
+```
+
+The workflow performs a full validation and build cycle every time code is updated.
+
+It begins by checking out the repository so the workflow has access to the project files. It then sets up a Node.js environment and installs all required dependencies using a clean install (npm ci) to ensure consistency with the lockfile.
+
+After dependencies are installed, the workflow runs code quality checks. This includes linting (to detect potential code issues) and Prettier formatting checks (to ensure consistent code style across the project).
+
+Once the JavaScript environment is prepared, Python is also installed because parts of the build pipeline rely on Python-based scripts for post-processing tasks.
+
+After all validations pass, the project is built using the configured build command (npm run build). This step generates the final static output in the dist/ directory.
+
+Finally, the workflow uploads two artifacts:
+
+1. A latest build artifact (dist), representing the most recent successful build
+2. A backup artifact (dist-backup-${{ github.sha }}), which preserves a versioned snapshot of that build for historical reference and rollback purposes
+
+<div class="note">
+
+Each workflow run executes in a clean, isolated environment. This means no files or dependencies persist between runs unless explicitly restored or cached.
+
+The workflow does not currently include deployment automation. Instead, it produces artifacts that are manually downloaded and uploaded to the production server (via cPanel).
+
+Workflow chaining and advanced orchestration (such as separate validation or performance workflows) are not used in this setup. All checks are currently centralized within this single build pipeline for simplicity and predictability.
+
+</div>
