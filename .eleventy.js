@@ -6,6 +6,7 @@ const cheerio = require("cheerio");
 module.exports = function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy("src/assets");
+  eleventyConfig.addWatchTarget("src/assets");
 
   const md = markdownIt({
     html: true,
