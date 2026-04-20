@@ -326,14 +326,14 @@ p code {
   align-items: center;
   padding: 0.5rem 0.9rem;
   border-radius: 999px;
-  background: #1a73e8;
+  background: #2a2a2a;
   color: white;
   font-weight: 600;
   transition: 0.2s ease;
 }
 
 .link-primary:hover {
-  background: #1558b0;
+  background: var(--color-hover);
 }
 
 .link-special {
