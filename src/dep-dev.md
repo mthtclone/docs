@@ -678,7 +678,7 @@ Workflows are triggered by events. For example, the build workflow in this proje
 
 Last Updated on 4/19/2026{.date}
 
-The main workflow used in this project is the build pipeline defined in build.yml.
+The main workflow used in this project is the build pipeline defined in `build.yml`.
 
 This workflow is responsible for validating the codebase, building the project, and producing deployable static files stored in the dist/ directory.
 
