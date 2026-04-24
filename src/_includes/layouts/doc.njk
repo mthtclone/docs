@@ -24,9 +24,26 @@
           </a>
         </div>
 
-      <div class="search">
-        <input placeholder="Search..." />
+      <div class="InputContainer">
+        <input
+          placeholder="Search"
+          id="input"
+          class="input"
+          name="text"
+          type="text"
+        />
+
+        <label class="labelforsearch" for="input">
+          <svg class="searchIcon" viewBox="0 0 512 512">
+            <path
+              d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+            ></path>
+          </svg>
+        </label>
+
+        <div id="search-results" class="search-results"></div>
       </div>
+
 
     </nav>
   </header>
@@ -79,6 +96,8 @@
 
 </body>
 <script type="module">
+  import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@7.3.0/dist/fuse.min.mjs";
+
   const btn = document.getElementById("menu-toggle");
   const sidebar = document.querySelector(".sidebar");
   const rightSidebar = document.querySelector(".right-sidebar");
@@ -92,6 +111,8 @@
     if (rightSidebar) {
       rightSidebar.classList.remove("open");
     }
+
+    resultsBox.classList.remove("active");
   }
 
   btn.addEventListener("click", () => {
@@ -106,6 +127,68 @@
   });
 
   backdrop.addEventListener("click", closeAll);
+
+  let fuse;
+  let pages = [];
+
+  const input = document.getElementById("input");
+  const resultsBox = document.getElementById("search-results");
+
+  async function initSearch() {
+    const res = await fetch("/search-index.json");
+    pages = await res.json();
+
+    fuse = new Fuse(pages, {
+      keys: ["title", "content"],
+      includeScore: true,
+      threshold: 0.3
+    });
+  }
+
+  function handleSearch(query) {
+    if (!fuse || !query.trim()) return [];
+
+    return fuse.search(query).map(r => r.item);
+  }
+
+  function renderResults(results) {
+    const query = input.value.trim();
+
+    if (!results.length || !query) {
+      resultsBox.innerHTML = "";
+      resultsBox.classList.remove("active");
+      return;
+    }
+
+    resultsBox.innerHTML = results
+      .slice(0, 6)
+      .map(
+        (r) => `
+          <a href="${r.url}" class="search-item">
+            ${r.title}
+          </a>
+        `
+      )
+      .join("");
+
+    resultsBox.classList.add("active");
+  }
+
+  input.addEventListener("input", (e) => {
+    const results = handleSearch(e.target.value);
+    renderResults(results);
+  });
+
+  document.addEventListener("click", (e) => {
+    const container = document.querySelector(".InputContainer");
+
+    if (!container.contains(e.target)) {
+      resultsBox.classList.remove("active");
+      resultsBox.innerHTML = "";
+    }
+  });
+
+  initSearch();
 </script>
 <script src="../../assets/js/prism.js" defer>
   Prism.highlightAll();

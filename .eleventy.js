@@ -5,9 +5,15 @@ const cheerio = require("cheerio");
 
 module.exports = function (eleventyConfig) {
 
+  /* =========================
+     PASSTHROUGH FILES
+  ========================= */
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addWatchTarget("src/assets");
 
+  /* =========================
+     MARKDOWN CONFIG
+  ========================= */
   const md = markdownIt({
     html: true,
     linkify: true
@@ -21,6 +27,44 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.setLibrary("md", md);
 
+  /* =========================
+     SAFE JSON FILTER (fixes escaping issues)
+  ========================= */
+  eleventyConfig.addFilter("json", (value) => {
+    return JSON.stringify(value);
+  });
+
+  /* =========================
+     HEADINGS EXTRACTOR (for search index)
+  ========================= */
+  eleventyConfig.addFilter("extractHeadings", (content) => {
+    if (!content) return [];
+
+    const $ = cheerio.load(content);
+
+    let headings = [];
+
+    $("h2, h3, h4").each(function () {
+      const el = $(this);
+
+      const text = el.text();
+      const id = el.attr("id");
+
+      if (!id) return;
+
+      headings.push({
+        text,
+        id,
+        level: el.get(0).tagName
+      });
+    });
+
+    return headings;
+  });
+
+  /* =========================
+     TOC TRANSFORM (unchanged)
+  ========================= */
   eleventyConfig.addTransform("toc", function (content, outputPath) {
 
     if (!outputPath || !outputPath.endsWith(".html")) {
@@ -62,6 +106,9 @@ module.exports = function (eleventyConfig) {
     return $.html();
   });
 
+  /* =========================
+     ELEVENTY CONFIG
+  ========================= */
   return {
     dir: {
       input: "src",

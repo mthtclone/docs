@@ -105,12 +105,10 @@ body {
   
   .links a:hover {
     box-shadow: var(--box-shadow-cls);
-    transform: translateY(-2px);
   }
 
   .sub-trees a:hover {
     box-shadow: var(--box-shadow-cls);
-    transform: translateY(-2px);
   }
   
   .link-title {
