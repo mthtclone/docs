@@ -26,8 +26,10 @@
   --color-active: #2a2a2a;
   --color-focus-ring: #58a6ff;
 
-  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-base:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --space-xs: 4px;
   --space-sm: 8px;
@@ -39,90 +41,94 @@
   --radius-md: 6px;
   --radius-lg: 8px;
 
-  --box-shadow-cls: 
-    inset 0px 22px 20px -6px rgba(255, 255, 255, 0.04);
+  --box-shadow-cls: inset 0px 22px 20px -6px rgba(255, 255, 255, 0.04);
 }
 
 body {
-    margin: 0;
-    font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-    background: var(--color-bg);
-    color: var(--color-text-primary);
-    line-height: 1.6;
-  }
-  
-  .page {
-    max-width: 900px;
-    margin: 80px auto;
-    padding: 0 24px;
-  }
-  
-  .title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 24px;
-  }
-  
-  .text p {
-    margin: 14px 0;
-  }
-  
-  .links {
-    margin-top: 32px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Arial,
+    sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
 
-  .sub-trees {
-    margin-top: 32px;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
-  }
+.page {
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 0 24px;
+}
 
-  .sub-trees a {
-    display: block;
-    padding: 12px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-    text-decoration: none;
-    color: var(--color-text-primary);
-    transition: 0.15s ease;
-  }
-  
-  .links a {
-    display: block;
-    padding: 12px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-    text-decoration: none;
-    color: var(--color-text-primary);
-    transition: 0.15s ease;
-  }
-  
-  .links a:hover {
-    box-shadow: var(--box-shadow-cls);
-  }
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
 
-  .sub-trees a:hover {
-    box-shadow: var(--box-shadow-cls);
-  }
-  
-  .link-title {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
-  
-  .link-desc {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
-    line-height: 1.4;
-  }
+.text p {
+  margin: 14px 0;
+}
+
+.links {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.sub-trees {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+}
+
+.sub-trees a {
+  display: block;
+  padding: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--color-text-primary);
+  transition: 0.15s ease;
+}
+
+.links a {
+  display: block;
+  padding: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--color-text-primary);
+  transition: 0.15s ease;
+}
+
+.links a:hover {
+  box-shadow: var(--box-shadow-cls);
+}
+
+.sub-trees a:hover {
+  box-shadow: var(--box-shadow-cls);
+}
+
+.link-title {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.link-desc {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
 
 @media (max-width: 800px) {
   .page {

@@ -17,14 +17,8 @@ Copy this generic HTML template when creating new pages.
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta
-      name="title"
-      content="### | International Leadership Collège"
-    />
-    <meta
-      name="description"
-      content="###"
-    />
+    <meta name="title" content="### | International Leadership Collège" />
+    <meta name="description" content="###" />
     <meta
       name="keywords"
       content="International Leadership Collège, admissions, apply, college application, leadership education, international school"
@@ -51,10 +45,7 @@ Copy this generic HTML template when creating new pages.
       name="twitter:title"
       content="placehold. | International Leadership Collège"
     />
-    <meta
-      name="twitter:description"
-      content="###"
-    />
+    <meta name="twitter:description" content="###" />
     <meta name="twitter:image" content="https://ilu.edu.mm/img/og-image.jpg" />
 
     <meta name="theme-color" content="#ff8c31" />
@@ -85,7 +76,7 @@ Copy this generic HTML template when creating new pages.
     <link rel="preload" href="./assets/apply_resp.css" />
 
     <link rel="icon" href="/img/favicon.png" type="image/png" />
-    <title> placehold. | International Leadership Collège</title>
+    <title>placehold. | International Leadership Collège</title>
     <style>
       .no-js-warning {
         background-color: var(--surface-variant);
@@ -203,7 +194,6 @@ Copy this generic HTML template when creating new pages.
       <navbar-component></navbar-component>
       <main>
         <nav id="breadcrumb" aria-label="Breadcrumb"></nav>
-        
       </main>
 
       <footer-component></footer-component>

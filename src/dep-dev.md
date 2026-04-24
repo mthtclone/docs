@@ -2,13 +2,14 @@
 layout: layouts/doc.njk
 title: Development
 ---
+
 ## Accessibility
 
 **Accessibility** means designing and building the website so that everyone can use it, including people with disabilities. This includes users who rely on screen readers, keyboard navigation, voice control, or other assistive technologies.
 
 In simple terms, if a user cannot see the screen, cannot use a mouse, or has difficulty reading content, the website must still remain usable and understandable.
 
-**Accessibility** is not optional. Many regions enforce legal requirements that require websites, ***especially educational institutions***, to meet defined accessibility standards. These requirements are commonly based on the WCAG 2.1 (Web Content Accessibility Guidelines), which define how web content should be made accessible.
+**Accessibility** is not optional. Many regions enforce legal requirements that require websites, **_especially educational institutions_**, to meet defined accessibility standards. These requirements are commonly based on the WCAG 2.1 (Web Content Accessibility Guidelines), which define how web content should be made accessible.
 
 Failure to meet these standards can result in legal consequences under regulations such as the **Americans with Disabilities Act (ADA)** and similar laws in other countries. More importantly, poor accessibility prevents users from accessing essential information and services.
 
@@ -45,7 +46,7 @@ This section defines the styling system used across the project. It establishes 
 
 The CSS architecture follows a layered approach. Each layer has a clear responsibility and should not overlap with others.
 
-The goal is to separate *layout*, *typography*, and *component-specific styling* so that changes in one area do not unintentionally break others.
+The goal is to separate _layout_, _typography_, and _component-specific styling_ so that changes in one area do not unintentionally break others.
 
 Instead of writing repeated styles in every section, shared patterns are abstracted into base classes, while page-specific classes handle structure and positioning.
 
@@ -139,15 +140,17 @@ A component typically uses a block-style naming convention such as `.about__intr
 
 ```html
 <section
-        class="about__intro section"
-        role="region"
-        aria-labelledby="about-ilc-heading"
-       >
-        <div class="about__intro-text">
-          <h2 class="heading-primary" id="about_intro-heading">
-            Let Us Introduce <span class="text-accent">Ourselves</span>
-          </h2>
-  ... ... ... 
+  class="about__intro section"
+  role="region"
+  aria-labelledby="about-ilc-heading"
+>
+  <div class="about__intro-text">
+    <h2 class="heading-primary" id="about_intro-heading">
+      Let Us Introduce <span class="text-accent">Ourselves</span>
+    </h2>
+    ... ... ...
+  </div>
+</section>
 ```
 
 Inside each component, child elements describe their role within that section rather than relying on generic tags or reused class names without context.
@@ -190,7 +193,7 @@ Before writing new CSS, the first step should always be checking whether a base 
 
 If new patterns are introduced, they should be added to the base layer only if they are truly reusable across multiple sections or pages.
 
-## Code Quality 
+## Code Quality
 
 The project uses two separate systems to keep the code clean and consistent.
 
@@ -211,13 +214,13 @@ This means Vue is applied in smaller, embedded sections rather than controlling 
 
 Its main responsibility is to detect issues such as unused variables, broken patterns in JavaScript or Vue components, and general structural mistakes that could lead to bugs. It also enforces consistency rules defined by the project configuration so that multiple developers do not write code in conflicting styles.
 
-To install **ESLint** and its dependencies, the project uses, 
+To install **ESLint** and its dependencies, the project uses,
 `npm run lint`
 
 These are the required plugins/packages used for linter:
 
 - eslint-plugin-vue
-- eslint-config-prettier 
+- eslint-config-prettier
 - eslint-plugin-prettier
 
 These are the core **ESLint** engine and the plugins required for Vue support and **Prettier** integration.
@@ -235,46 +238,46 @@ This will modify files directly, but only for problems that **ESLint** is confid
 
 #### Configuration (Flag Config)
 
-**ESLint** uses the modern flat configuration system (eslint.config.*), which is required for **ESLint** v9+.
+**ESLint** uses the modern flat configuration system (eslint.config.\*), which is required for **ESLint** v9+.
 
 In the `eslint.config.cjs` file,
 
-The project uses **ESLint** v10+, which requires `eslint.config.*` instead of .eslintrc.*
+The project uses **ESLint** v10+, which requires `eslint.config.*` instead of .eslintrc.\*
 
 ```javascript
-    const vue = require('eslint-plugin-vue');
-    const prettier = require('eslint-config-prettier');
-    
-    module.exports = [
-      {
-        ignores: [
-          'dist/**',
-          'node_modules/**',
-          'src/js/jquery-*.min.js',
-          'src/js/vue.esm-browser*.js',
-        ],
-      },
-    
-      // Vue 3 recommended rules (flat config)
-      ...vue.configs['flat/recommended'],
-    
-      {
-        files: ['**/*.{js,vue}'],
-        languageOptions: {
-          ecmaVersion: 'latest',
-          sourceType: 'module',
-        },
-        rules: {
-          'no-unused-vars': 'warn',
-          'no-console': 'off',
-    
-          // Custom convention: allow kebab-case component names
-          'vue/component-definition-name-casing': 'off',
-        },
-      },
-    
-      prettier,
-    ];
+const vue = require('eslint-plugin-vue');
+const prettier = require('eslint-config-prettier');
+
+module.exports = [
+  {
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      'src/js/jquery-*.min.js',
+      'src/js/vue.esm-browser*.js',
+    ],
+  },
+
+  // Vue 3 recommended rules (flat config)
+  ...vue.configs['flat/recommended'],
+
+  {
+    files: ['**/*.{js,vue}'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    },
+    rules: {
+      'no-unused-vars': 'warn',
+      'no-console': 'off',
+
+      // Custom convention: allow kebab-case component names
+      'vue/component-definition-name-casing': 'off',
+    },
+  },
+
+  prettier,
+];
 ```
 
 The configuration starts by importing required plugins. One plugin adds Vue-specific linting rules, and another disables rule conflicts between **ESLint** and **Prettier**.
@@ -310,7 +313,7 @@ The node_modules folder is excluded because it contains external dependencies. T
 
 Minified vendor scripts are also ignored because they are compressed production files from external libraries. Running linting on them would produce irrelevant warnings and would not improve code quality.
 
-### Prettier 
+### Prettier
 
 **Prettier** is responsible only for formatting. It does not check for bugs or enforce coding logic. It simply rewrites code so that it follows a consistent visual structure.
 
@@ -321,15 +324,16 @@ Unlike **ESLint**, **Prettier** does not report problems. It directly rewrites f
 To install **Prettier**, `npm install -D prettier`
 
 ```json
-    {
-      "semi": true,
-      "singleQuote": true,
-      "trailingComma": "es5",
-      "printWidth": 80,
-      "tabWidth": 2,
-      "endOfLine": "auto"
-    }
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "endOfLine": "auto"
+}
 ```
+
 The **Prettier** configuration defines a strict formatting standard for the entire project.
 
 It ensures that semicolons are always used, single quotes are preferred for strings, trailing commas are included where valid, and line width is limited so code remains readable.
@@ -390,11 +394,11 @@ If any errors remain that cannot be automatically fixed, the commit is aborted. 
 
 #### Setup & Configuration
 
-The system requires two development dependencies, `husky` and `lint-staged`. 
+The system requires two development dependencies, `husky` and `lint-staged`.
 
 These are installed using, `npm install -D husky lint-staged`.
 
-After installation, Husky must be initialized, `npx husky init`. This creates a `.husky/` directory in the project root, which contains Git hook definitions. 
+After installation, Husky must be initialized, `npx husky init`. This creates a `.husky/` directory in the project root, which contains Git hook definitions.
 
 A prepare script is added to package.json, `"prepare": "husky"`. This ensures that Husky is automatically installed when dependencies are installed, which is necessary when the project is cloned on a new machine.
 
@@ -411,7 +415,7 @@ The behavior of lint-staged is defined in `package-json`.
 }
 ```
 
-This configuration makes sure that only `.js` and `.vue` files are processed. **ESLint** is executed first, attempting to automatically fix issues or flag issues that need human intervention. **Prettier** is executed afterward to enforce formatting and detect some HTML errors if exist. 
+This configuration makes sure that only `.js` and `.vue` files are processed. **ESLint** is executed first, attempting to automatically fix issues or flag issues that need human intervention. **Prettier** is executed afterward to enforce formatting and detect some HTML errors if exist.
 
 The use of staged files is critical for performance. Instead of scanning the entire project, only files being committed are processed.
 
@@ -421,7 +425,7 @@ The project uses a custom convention for Vue components that differs from standa
 
 Instead of using JSX-style component tags or PascalCase components like `<NavBar />`, the project uses a more HTML-like structure such as `<navbar-component></navbar-component>`.
 
-This approach is intentional because Vue is being used in a progressive enhancement style rather than a full SPA architecture. The goal is to keep components readable in static HTML and make them visually obvious when embedded in templates. 
+This approach is intentional because Vue is being used in a progressive enhancement style rather than a full SPA architecture. The goal is to keep components readable in static HTML and make them visually obvious when embedded in templates.
 
 To support this, **ESLint** rules are adjusted so that this naming convention does not trigger warnings or errors.
 
@@ -429,27 +433,27 @@ To support this, **ESLint** rules are adjusted so that this naming convention do
 
 The project uses Dependabot to automatically monitor and update project dependencies.
 
-Dependabot is a service provided by GitHub that scans the repository for dependency files (such as 
+Dependabot is a service provided by GitHub that scans the repository for dependency files (such as
 `package.json`) and checks whether newer versions of those dependencies are available. When updates are found, it automatically creates pull requests with the proposed changes.
 
-Dependabot is configured using the following file, 
+Dependabot is configured using the following file,
 `.github/dependabot.yml`. This file must be placed inside the `.github/` directory at the root of the repository. If the directory does not exist, it must be created manually.
 
 ```yml
 version: 2
 
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "deps"
-    rebase-strategy: "auto"
+      prefix: 'deps'
+    rebase-strategy: 'auto'
     ignore:
-      - dependency-name: "vue"
-        update-types: ["version-update:semver-major"]
+      - dependency-name: 'vue'
+        update-types: ['version-update:semver-major']
 ```
 
 ### Configuration
@@ -474,12 +478,13 @@ When new commits are added to the main branch after a Dependabot pull request is
 
 With this setting enabled, Dependabot automatically rebases its pull requests on top of the latest version of the main branch. This reduces manual intervention and helps maintain clean merge history.
 
-The configuration explicitly ignores major version updates for the Vue dependency, 
+The configuration explicitly ignores major version updates for the Vue dependency,
 
 ```yml
-dependency-name: "vue"
-update-types: ["version-update:semver-major"]
+dependency-name: 'vue'
+update-types: ['version-update:semver-major']
 ```
+
 Major version updates often introduce breaking changes that require manual code modifications and testing. By ignoring these updates, the system avoids automatically generating pull requests that may destabilize the project.
 
 Minor and patch updates for Vue are still allowed and will be proposed by Dependabot.
@@ -536,7 +541,7 @@ Each HTML file that is treated as an entry point becomes its own output page. Th
 
 When the build finishes successfully, a new folder called `dist` is created in the project root.
 
-This folder contains the entire production-ready version of your website. It includes compiled HTML files, bundled JavaScript, optimized CSS, and any processed assets like images or fonts. 
+This folder contains the entire production-ready version of your website. It includes compiled HTML files, bundled JavaScript, optimized CSS, and any processed assets like images or fonts.
 
 The important thing to understand is that dist is not meant to be edited manually. It is a generated output, not a source folder. Any changes made inside it will be overwritten the next time you run the build command. If you want to change something in the project, you must always edit the source files and then rebuild.
 
@@ -565,13 +570,13 @@ This is the single entry point for the entire system. You do not run the other s
 
 The post-processing system consists of multiple scripts:
 
--   `0_startup.py` → orchestrator and logger
--   `1_process_links.py` → cleans and rewrites HTML links
--   `2_generate_sitemap.py` → generates `sitemap.xml`
+- `0_startup.py` → orchestrator and logger
+- `1_process_links.py` → cleans and rewrites HTML links
+- `2_generate_sitemap.py` → generates `sitemap.xml`
 
 Each script is executed in order and is designed to be **idempotent**, meaning it only performs work when necessary.
 
-### HTML Link Processing 
+### HTML Link Processing
 
 Last Update on 4/18/2026{.date}
 
@@ -587,9 +592,9 @@ The script parses each HTML file inside dist/, finds all internal href attribute
 
 Examples:
 
--   `/pages/about.html` → `/about`
--   `/pages/admission/apply.html` → `/admission/apply`
--   `/programs/bachelor-of-science.html` → `/programs/bachelor-of-science`
+- `/pages/about.html` → `/about`
+- `/pages/admission/apply.html` → `/admission/apply`
+- `/programs/bachelor-of-science.html` → `/programs/bachelor-of-science`
 
 External links (e.g. https://...) and special protocols (mailto, tel, anchors) are ignored and left untouched.
 
@@ -599,9 +604,9 @@ Each file is processed like this:
 
 First, the file content is read and an MD5 hash is generated. Then the script compares this hash to a cached version stored from previous runs. If the file has not changed, it is skipped completely.
 
--   Each file is hashed using MD5
--   Only modified files are processed
--   Results are cached in a dedicated cache directory
+- Each file is hashed using MD5
+- Only modified files are processed
+- Results are cached in a dedicated cache directory
 
 A cache directory is used to store these hash values so future runs can quickly determine what needs processing.
 
@@ -609,7 +614,7 @@ This avoids reprocessing unchanged files, which is critical when working with a 
 
 This step is not a link validator. It does not check whether routes exist or are reachable; it only ensures that internal links are correctly formatted for the production routing model before deployment.
 
-### **Sitemap Generation** 
+### **Sitemap Generation**
 
 Last Update on 4/18/2026{.date}
 
@@ -623,11 +628,11 @@ The sitemap generator creates a clean `sitemap.xml` file inside `dist/`.
 
 It includes all public-facing routes such as:
 
--   `/`
--   `/about`
--   `/admission`
--   `/admission/apply`
--   `/contact`
+- `/`
+- `/about`
+- `/admission`
+- `/admission/apply`
+- `/contact`
 
 All routes are normalized into “pretty URL” format, meaning file extensions such as .html are removed and /pages/ prefixes are stripped when applicable. This matches the production server behavior, where Apache rewrite rules serve clean URLs instead of direct file paths.
 
@@ -641,20 +646,20 @@ It is not required for the site to function. If generation fails or is skipped, 
 
 When extending the pipeline, follow these principles to maintain performance and reliability:
 
- - Each script should do one task only. Avoid combining unrelated logic.
- - Avoid unnecessary computation: use file hashes (MD5 or similar) to
-   detect changes, store  cache in a dedicated folder (not root), skip
-   processing when inputs are unchanged. 
-  - Disk operations are expensive:
-   do not read/write files unless necessary, compare content before
-   writing, batch operations when possible. 
-  - Always write files safely.
-   Write to a temporary file, and replace the original file only after
-   success. This prevents corruption in case of crashes or
-   interruptions. 
-  - Running a script multiple times should not change the result after the first successful run. 
-   - Name scripts sequentially (`1_`, `2_`, `3_`, etc.), and add them to `0_startup.py`. 
-   - Ensure failure stops the pipeline.
+- Each script should do one task only. Avoid combining unrelated logic.
+- Avoid unnecessary computation: use file hashes (MD5 or similar) to
+  detect changes, store cache in a dedicated folder (not root), skip
+  processing when inputs are unchanged.
+- Disk operations are expensive:
+  do not read/write files unless necessary, compare content before
+  writing, batch operations when possible.
+- Always write files safely.
+  Write to a temporary file, and replace the original file only after
+  success. This prevents corruption in case of crashes or
+  interruptions.
+- Running a script multiple times should not change the result after the first successful run.
+- Name scripts sequentially (`1_`, `2_`, `3_`, etc.), and add them to `0_startup.py`.
+- Ensure failure stops the pipeline.
 
 #### Supplementary Readings
 
@@ -674,7 +679,7 @@ A workflow in GitHub Actions is defined using a YAML file placed inside the .git
 
 Workflows are triggered by events. For example, the build workflow in this project runs automatically whenever code is pushed to the main branch or when a pull request is opened.
 
-### Current Build Workflow 
+### Current Build Workflow
 
 Last Updated on 4/19/2026{.date}
 

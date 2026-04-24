@@ -1,7 +1,8 @@
 ---
 layout: layouts/doc.njk
-title: Accessibility 
+title: Accessibility
 ---
+
 ## Semantics
 
 Semantic structure is the foundation of web accessibility. It allows assistive technologies (like screen readers) to understand the structure and meaning of a page without relying on visual layout.
@@ -42,11 +43,11 @@ All interactive behavior must use native HTML elements whenever possible.
 
 - Use `<button>` for actions (e.g., toggles, dialogs, dropdowns)
 - Use `<a>` for navigation between pages or sections
-Avoid using `<div>` or `<span>` as interactive controls
+  Avoid using `<div>` or `<span>` as interactive controls
 
-This ensures keyboard support, focus handling, and screen reader behavior work by default. 
+This ensures keyboard support, focus handling, and screen reader behavior work by default.
 
-Custom interactive elements should only be created when absolutely necessary, and ***must fully replicate native behavior***.
+Custom interactive elements should only be created when absolutely necessary, and **_must fully replicate native behavior_**.
 
 ### Forms
 
@@ -89,7 +90,7 @@ When a page is loaded, the browser (user agent) builds a representation of the p
 
 **ARIA** plays a role in this process by defining:
 
-- Roles — what something is (e.g., button, navigation, tab) 
+- Roles — what something is (e.g., button, navigation, tab)
 - States — what condition it is in (e.g., expanded, selected, disabled)
 - Properties — additional relationships or descriptions (e.g., labels, controls)
 
@@ -127,15 +128,15 @@ Use native HTML first, then use **ARIA** only to refine or clarify meaning when 
 
 ### Common ARIA attributes and their purpose
 
-**aria-label** is used when an element needs a label but does not have visible text. This is common for icon-only controls, such as social media links or buttons that only contain an SVG. It provides a name that screen readers can announce.  
+**aria-label** is used when an element needs a label but does not have visible text. This is common for icon-only controls, such as social media links or buttons that only contain an SVG. It provides a name that screen readers can announce.
 
-**aria-hidden="true"** is used to hide elements from assistive technologies. This is important for decorative content like icons or visual separators. Anything marked as hidden must not contain meaningful information, otherwise that information becomes inaccessible.  
+**aria-hidden="true"** is used to hide elements from assistive technologies. This is important for decorative content like icons or visual separators. Anything marked as hidden must not contain meaningful information, otherwise that information becomes inaccessible.
 
-**aria-current="page"** is used to indicate the current item within a set, such as the active page in a navigation menu or breadcrumb. This helps users understand their current location.  
+**aria-current="page"** is used to indicate the current item within a set, such as the active page in a navigation menu or breadcrumb. This helps users understand their current location.
 
-**aria-label** on landmarks is used when there are multiple regions of the same type. For example, if a page has more than one navigation area, labels like “Primary navigation” and “Breadcrumb” help distinguish them.  
+**aria-label** on landmarks is used when there are multiple regions of the same type. For example, if a page has more than one navigation area, labels like “Primary navigation” and “Breadcrumb” help distinguish them.
 
-**aria-expanded** is used for elements that show or hide content, such as dropdowns or accordions. It tells assistive technologies whether the content is currently visible or hidden, and must be updated dynamically.  
+**aria-expanded** is used for elements that show or hide content, such as dropdowns or accordions. It tells assistive technologies whether the content is currently visible or hidden, and must be updated dynamically.
 
 **aria-controls** defines a relationship between a control and the element it affects. For example, a button that opens a panel can use this attribute to indicate which panel it controls.
 
@@ -154,6 +155,7 @@ By applying a role, you are explicitly telling assistive technologies how an ele
 ```
 <li role="menuitem">Open file…</li>
 ```
+
 Here, a list item is being treated as a menu item. Without the role, assistive technologies would only understand it as part of a list, not as an interactive control.
 
 Each role in WAI-ARIA comes with a defined model. This includes:
@@ -218,9 +220,9 @@ This is one of the most common accessibility failures in modern web applications
 
 Not all states need to be handled manually.
 
-Some states are automatically managed by the browser. These include 
+Some states are automatically managed by the browser. These include
 
-1. Keyboard focus 
+1. Keyboard focus
 2. Text Selection
 
 These are called managed states, and they are exposed through CSS pseudo-classes like :focus.
@@ -237,7 +239,7 @@ If these are used, your JavaScript must update them whenever the UI changes.
 
 Failing to do so results in incorrect information being communicated to assistive technologies.
 
-## Using ARIA with CSS 
+## Using ARIA with CSS
 
 ARIA attributes can also be used as hooks for styling.
 
@@ -269,7 +271,7 @@ Problems arise when building custom components.
 
 Elements like tab systems, dropdown menus, and expandable panels often require custom interaction patterns. These patterns must be implemented manually to remain accessible.
 
-### Keyboard Access 
+### Keyboard Access
 
 All functionality must be fully operable using a keyboard.
 
@@ -278,10 +280,9 @@ Some users rely on keyboards instead of a mouse, including users with motor disa
 1. All interactive elements must be reachable using the `Tab` key.
 
 2. Users must be able to activate controls using standard keys:
-
-    - Enter for links and buttons
-    - Space for buttons and toggles
-    - The tab order must follow a logical and predictable sequence
+   - Enter for links and buttons
+   - Space for buttons and toggles
+   - The tab order must follow a logical and predictable sequence
 
 3. Users must not get “trapped” inside components (e.g., modals, dropdowns)
 
@@ -314,7 +315,7 @@ Use `:focus-visible` to apply focus styles only when needed, without affecting m
 }
 ```
 
-## Form Errors and Validation 
+## Form Errors and Validation
 
 Forms must clearly communicate errors and validation states to all users. This includes both visual users and users of assistive technologies.
 
@@ -324,7 +325,7 @@ Forms must clearly communicate errors and validation states to all users. This i
 
 When validation fails, move focus to the first invalid field, or provide a clear error summary at the top of form.
 
-Use `aria-live` regions to announce errors when they appear. 
+Use `aria-live` regions to announce errors when they appear.
 
 Do not rely on placeholder text or visual cues alone to communicate errors.
 
@@ -359,7 +360,7 @@ Every page should include a skip link as the first focusable element.
 The target must match the id of the main content container:
 
 ```html
-<main id="main-content">
+<main id="main-content"></main>
 ```
 
 Skip links can be visually hidden by default, but must become visible when focused.

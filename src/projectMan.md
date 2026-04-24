@@ -1,7 +1,7 @@
 ---
 title: Project Management
 layout: layouts/doc.njk
---- 
+---
 
 This section is equally important — if not more so — than the development guidelines that all maintainers must be familiar with.
 
@@ -22,7 +22,7 @@ The following columns are used in our workflow:
 
 - **Backlog** - Used only for drafting. This is where informal ideas, notes, or early concepts are recorded before being refined into actionable issues or discussed with other maintainers.
 
-- **Anticipated** - The starting point for concrete issues. Items here are not yet in progress but are considered viable candidates for implementation or may later be rejected during review. 
+- **Anticipated** - The starting point for concrete issues. Items here are not yet in progress but are considered viable candidates for implementation or may later be rejected during review.
 
 - **Bug** - A dedicated column for tracking known defects or issues. This is not strictly part of the feature lifecycle and serves as a centralized space for problem tracking.
 
@@ -40,7 +40,7 @@ The following columns are used in our workflow:
 
 ## Labels
 
-- **atty** - General internal tracking label for accessibility-related issues. Used as a catch-all for miscellaneous tasks that have not yet been categorized. 
+- **atty** - General internal tracking label for accessibility-related issues. Used as a catch-all for miscellaneous tasks that have not yet been categorized.
 
 - **bug** - Indicates something is broken or not functioning as intended. This is a generic label and may be applied before further classification or specification is available.
 
@@ -52,7 +52,7 @@ The following columns are used in our workflow:
 
 - **enhancement** - Improvements to existing functionality or user experience. This may be used alongside other labels to indicate what is being improved.
 
-- **experimental** - Prototype or trial features that are not guaranteed to be permanent. Typically used for significant or exploratory changes. 
+- **experimental** - Prototype or trial features that are not guaranteed to be permanent. Typically used for significant or exploratory changes.
 
 - **feature** - A generic label for new functionality or additions to the system.
 
@@ -60,13 +60,13 @@ The following columns are used in our workflow:
 
 - **help wanted** - Indicates that the issue is open, unassigned, and available for contribution.
 
-- **incomplete** - Work that is partially completed or does not yet meet the required scope. 
+- **incomplete** - Work that is partially completed or does not yet meet the required scope.
 
 - **Need REVIEW!** - Issues requiring urgent review prior to merging or final approval.
 
 - **needs-info** - Additional information is required before work can proceed.
 
-- **overdue** - Tasks or issues that have exceeded their expected deadline or timeline. 
+- **overdue** - Tasks or issues that have exceeded their expected deadline or timeline.
 
 - **regression** - Issues where previously working functionality has broken due to recent changes.
 
@@ -90,7 +90,7 @@ The following columns are used in our workflow:
 
 5. Issues must not be moved from **Staging** to **Done** without an associated Pull Request and proper review process.
 
-6. All issues must be closed through commits or merged work. They must not be closed manually without corresponding repository changes.  
+6. All issues must be closed through commits or merged work. They must not be closed manually without corresponding repository changes.
 
 7. Issues should be treated as a traceable timeline of work. Their history must remain consistent, logical, and auditable throughout their lifecycle.
 
@@ -98,11 +98,11 @@ The following columns are used in our workflow:
 
 We use a standard priority scale (P0–P3) to classify task urgency and importance.
 
-- P0 – Critical issues requiring immediate attention (system-breaking or blocking work)  
+- P0 – Critical issues requiring immediate attention (system-breaking or blocking work)
 
-- P1 – High-priority tasks that should be addressed soon  
+- P1 – High-priority tasks that should be addressed soon
 
-- P2 – Medium-priority tasks scheduled for normal development flow  
+- P2 – Medium-priority tasks scheduled for normal development flow
 
 - P3 – Low-priority or optional tasks that can be addressed when resources allow
 
@@ -112,42 +112,42 @@ As a general rule, all issues must have a defined priority level. Exceptions may
 
 This is one of the more complex parts of the workflow, as different types of work require different evaluation criteria. A single universal review standard is not sufficient, so we group tasks into categories and define review expectations for each.
 
-1. Functionality  
+1. Functionality
 
 Functional changes (features, UI components, and system behavior) are reviewed based on the following criteria:
 
 - Semantics & Accessibility – The implementation should follow semantic HTML practices and accessibility standards.
-UI/UX Quality – The design should be intuitive, consistent, and user-friendly.  
+  UI/UX Quality – The design should be intuitive, consistent, and user-friendly.
 
-- Performance – The change should not introduce unnecessary performance overhead.  
+- Performance – The change should not introduce unnecessary performance overhead.
 
 - Maintainability – The code should be clean, extensible, and easy to maintain.
 
-2. Bug 
+2. Bug
 
 Bug-related changes are evaluated not only on whether they resolve the issue, but also on long-term impact:
 
-- Short-term fixes or patches are acceptable when necessary.  
+- Short-term fixes or patches are acceptable when necessary.
 
-- However, any temporary or workaround-based fix should ideally be accompanied by a follow-up task for a more permanent solution.  
+- However, any temporary or workaround-based fix should ideally be accompanied by a follow-up task for a more permanent solution.
 
 - The solution should minimize regression risk and avoid introducing technical debt where possible.
 
-3. Documentation 
+3. Documentation
 
 Documentation changes must ensure clarity, completeness, and maintainability of knowledge:
 
-- All relevant changes should be clearly documented.  
+- All relevant changes should be clearly documented.
 
-- Explanations should include what was changed and how it was changed.  
+- Explanations should include what was changed and how it was changed.
 
 - Documentation should be sufficient for a future maintainer to understand and continue work without prior context.
 
-4. Security 
+4. Security
 
 Security review ensures that changes do not introduce vulnerabilities, expose sensitive data, or weaken system integrity
 
-- Proper validation and sanitization of all user inputs to prevent injection attacks or malformed data handling.  
+- Proper validation and sanitization of all user inputs to prevent injection attacks or malformed data handling.
 
 - Ensuring only authorized users can perform restricted actions or access protected resources.
 
@@ -171,7 +171,7 @@ All proposed changes should be checked against:
 
 - Justification – The change should have a clear reason or requirement behind it.
 
-- Boundaries – Avoid expanding the system beyond its agreed scope without explicit discussion or approval. 
+- Boundaries – Avoid expanding the system beyond its agreed scope without explicit discussion or approval.
 
 - Dependency awareness – Ensure the change does not unintentionally require large unrelated modifications elsewhere.
 
@@ -179,15 +179,14 @@ All proposed changes should be checked against:
 
 Data integrity ensures that the system’s information remains accurate, consistent, and reliable throughout all operations.
 
-- Data should remain uniform across components, databases, and UI representations.  
+- Data should remain uniform across components, databases, and UI representations.
 
-- Updates must not introduce incorrect states or mismatched values.  
+- Updates must not introduce incorrect states or mismatched values.
 
-- Any change in data state must follow defined and predictable rules.  
+- Any change in data state must follow defined and predictable rules.
 
-- Ensure that stored data is not unintentionally overwritten, lost, or corrupted.  
+- Ensure that stored data is not unintentionally overwritten, lost, or corrupted.
 
-- All data modifications should respect existing constraints and schema rules.  
+- All data modifications should respect existing constraints and schema rules.
 
 At the time of writing, the approval authority and formal review assignment process have not yet been fully defined.{.warning}
-

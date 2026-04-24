@@ -2,7 +2,8 @@
 title: Changelog
 layout: layouts/doc.njk
 ---
-This document records technical observations, fixes, and decisions made during routine maintenance and optimization of the college website.  
+
+This document records technical observations, fixes, and decisions made during routine maintenance and optimization of the college website.
 
 All fixes and changes must be documented here and be verifiable via commit logs and issue tracking.
 

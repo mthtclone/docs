@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "eleventy",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "serve": "eleventy --serve --port=4000"
   },
   "keywords": [],
@@ -17,5 +19,8 @@
     "cheerio": "^1.2.0",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-attrs": "^4.3.1"
+  },
+  "devDependencies": {
+    "prettier": "3.8.3"
   }
 }

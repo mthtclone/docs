@@ -24,5 +24,6 @@ The accessibility of this website has been assessed through internal self-evalua
 
 Feedback on accessibility is welcome. If you experience any barriers or difficulty accessing content, you may contact the IT Department via email at communication.department@ilu.edu.mm or by phone at +959 979 515 199. The College aims to acknowledge and respond to accessibility feedback within a reasonable timeframe.
 
-This accessibility statement was prepared and approved by the Information Technology (IT) Department of International Leadership Collège. 
+This accessibility statement was prepared and approved by the Information Technology (IT) Department of International Leadership Collège.
+
 </div>

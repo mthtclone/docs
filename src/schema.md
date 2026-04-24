@@ -1,7 +1,7 @@
 ---
 title: Site-Wide Structured Data Architecture for International Leadership Collège
 layout: layouts/doc.njk
---- 
+---
 
 This document defines the structured data (JSON-LD) architecture used across the International Leadership Collège website. Its purpose is to ensure that every page contributes to a single, consistent, machine-readable knowledge graph that search engines (especially Google) can interpret as one coherent institutional entity rather than isolated pages.
 
@@ -119,7 +119,7 @@ Breadcrumbs are implemented per page but must remain consistent in structure. Th
 
 Breadcrumbs should never be used to represent entities; they only represent navigation.
 
-#### FAQPage 
+#### FAQPage
 
 FAQ schemas are only used on pages where the content is also visible to users. Each FAQPage must remain independent per page and should not reference unrelated entities.
 
@@ -138,6 +138,7 @@ FAQ schemas are only used on pages where the content is also visible to users. E
   ]
 }
 ```
+
 FAQ data is intentionally localized to the page level and is not part of the global entity graph.
 
 <hr>
@@ -147,4 +148,4 @@ These schemas are extensive and cannot be fully covered in a single document. Fo
 </div>
 
 [Schema.org](https://schema.org/){.link-special}
-[Schema validator](https://validator.schema.org/){.link-special}  [Google Rich Results Test](https://search.google.com/test/rich-results){.link-special}
+[Schema validator](https://validator.schema.org/){.link-special} [Google Rich Results Test](https://search.google.com/test/rich-results){.link-special}
