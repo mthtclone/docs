@@ -7,7 +7,7 @@ The Misc page serves as a centralized repository for general-purpose resources, 
 
 ## Template
 
-Copy this generic HTML template when adding new pages.
+Copy this generic HTML template when creating new pages.
 
 ```html
 <!doctype html>

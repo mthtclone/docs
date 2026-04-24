@@ -15,6 +15,12 @@
   --color-accent-hover: #79b8ff;
   --color-accent-active: #3d8bfd;
 
+  --prussian-blue: #001427ff;
+  --deep-teal: #708d81ff;
+  --jasmine: #f4d58dff;
+  --brick-ember: #bf0603ff;
+  --blood-red: #8d0801ff;
+
   --color-success: #3fb950;
   --color-warning: #d29922;
   --color-error: #f85149;
@@ -315,10 +321,12 @@ p code {
 .date {
   font-size: 0.75em;
   font-weight: 600;
-  color: var(--color-text-secondary);
+  background-color: var(--blood-red);
+  color: var(--color-text-primary);
   white-space: nowrap;
   border-bottom: 1px solid #fff;
   text-align: right;
+  padding: var(--space-xs);
 }
 
 .quotes {
