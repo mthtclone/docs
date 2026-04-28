@@ -88,9 +88,10 @@ body {
 }
 
 .sub-trees a {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px;
-  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 10px;
   text-decoration: none;
@@ -99,14 +100,20 @@ body {
 }
 
 .links a {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px;
-  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 10px;
   text-decoration: none;
   color: var(--color-text-primary);
   transition: 0.15s ease;
+}
+
+.links a svg {
+  display: block;
+  width: 20px;
 }
 
 .links a:hover {
