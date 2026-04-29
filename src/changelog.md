@@ -7,7 +7,11 @@ This document records technical observations, fixes, and decisions made during r
 
 All fixes and changes must be documented here and be verifiable via commit logs and issue tracking.
 
-Changes/commits for the internal documentation itself does not belong here.{.warning}
+<div class="note">
+<img src="/assets/img/notes.svg" />
+
+Changes/commits for the internal documentation itself does not belong here.
+</div>
 
 > Implementation details are available in the source code.  
 > Repository history and issue records are maintained under the **[ILC-Website Project](https://github.com/ILC-IT-department/ILC-Website)**.

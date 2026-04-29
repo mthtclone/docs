@@ -10,7 +10,9 @@ This accessibility statement was generated using the W3C Accessibility Statement
 It is provided to communicate the organization’s commitment to accessibility and to demonstrate alignment with WAI-ARIA standards and best practices.
 
 <div class="quotes">
-   This accessibility statement applies to the website of International Leadership Collège. The College is committed to ensuring digital accessibility for all users, including people with disabilities, and aims to provide an inclusive online experience that aligns with the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA standard.
+<img src="/assets/img/label_important.svg" />
+
+This accessibility statement applies to the website of International Leadership Collège. The College is committed to ensuring digital accessibility for all users, including people with disabilities, and aims to provide an inclusive online experience that aligns with the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA standard.
 
 International Leadership Collège takes measures to support accessibility across its digital content. Accessibility is included as part of the institution’s mission and ongoing commitment to inclusive education and communication.
 

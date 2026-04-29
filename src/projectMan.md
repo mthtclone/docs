@@ -1,5 +1,5 @@
 ---
-title: Project Management
+title: Project Management (Draft)
 layout: layouts/doc.njk
 ---
 
@@ -12,7 +12,7 @@ We use GitHub Projects as our project management (PM) tool because:
 3. It provides sufficient features for a typical PM workflow, including issue tracking, task boards, and progress visualization.
 4. The GitHub GraphQL API allows integration with external tools for automation, notifications, and bot-based workflow management.
 
-## Kanban Board
+## <img src="/assets/img/asterisk.svg" alt="" class="heading-icon" /> Kanban Board
 
 In this project, we use the terms Kanban and Backlog interchangeably, even though they have distinct meanings in standard project management practice.
 

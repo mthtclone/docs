@@ -19,7 +19,7 @@
   --deep-teal: #708d81ff;
   --jasmine: #f4d58dff;
   --brick-ember: #bf0603ff;
-  --blood-red: #8d0801ff;
+  --blood-red: rgba(141, 8, 1, 0.297);
 
   --color-success: #3fb950;
   --color-warning: #d29922;
@@ -66,7 +66,7 @@ body {
   margin: 0;
   font-family: system-ui;
   color: var(--color-text-primary);
-  background-color: var(--color-bg);
+  background: linear-gradient(225deg, #8a7a5a 0.000%, #1e3037 16.667%, #000012 33.333%, #000000 50.000%, #000000 66.667%, #301200 83.333%, #995e00 100.000%);
   line-height: 1.6;
 }
 
@@ -283,7 +283,7 @@ header nav {
 }
 
 .sidebar li:hover {
-  background-color: var(--color-active);
+  background-color: #2222228f;
 }
 
 .markdown-content {
@@ -413,7 +413,7 @@ p code {
   margin-left: 30px;
   padding-left: 10px;
   padding-bottom: 8px;
-  border-left: 3px solid var(--color-text-muted);
+  border-left: 2px solid var(--color-text-muted);
   opacity: 0.85;
 }
 
@@ -460,6 +460,86 @@ p code {
   margin: 1.5rem 0;
 }
 
+.important {
+  background: #111111;
+  color: #e6e6e6;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid #9900ff;
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+
+  line-height: 1.6;
+  font-size: 0.95rem;
+
+  margin: 1.5rem 0;
+}
+
+.warning {
+  background: #111111;
+  color: #e6e6e6;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid #ff0000;
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+
+  line-height: 1.6;
+  font-size: 0.95rem;
+
+  margin: 1.5rem 0;
+}
+
+.caution {
+  background: #111111;
+  color: #e6e6e6;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-warning);
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+
+  line-height: 1.6;
+  font-size: 0.95rem;
+
+  margin: 1.5rem 0;
+}
+
+.check-alert {
+  background: #111111;
+  color: #e6e6e6;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid #0ac4e5;
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+
+  line-height: 1.6;
+  font-size: 0.95rem;
+
+  margin: 1.5rem 0;
+}
+
+.tag::before {
+  display: inline-block;
+  padding: 0.3rem 0.4rem;
+  border-radius: 4px;
+  line-height: 1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: var(--box-shadow-pill);
+}
+
+/* Labels */
+.tag.k::before { content: "Key Idea"; }
+.tag.w::before { content: "Why It Matters"; }
+.tag.x::before { content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23FFFFFF'%3E%3Cpath d='M440-400v-360h80v360h-80Zm0 200v-80h80v80h-80Z'/%3E%3C/svg%3E"); }
+.tag.p::before { content: "In Practice"; }
+.tag.t::before { content: "Tooling"; }
+
+.tag.k::before { background: #3730a3; } /* indigo */
+.tag.w::before { background: #065f46; } /* green */
+.tag.x::before { background: #991b1b; padding: 0; } /* red */
+.tag.p::before { background: #075985; } /* blue */
+.tag.t::before { background: #5b21b6; } /* purple */
+
 .link-primary {
   display: inline-flex;
   align-items: center;
@@ -484,11 +564,11 @@ p code {
   transition: all 0.2s ease;
   margin: 0.3rem;
   color: var(--color-text-primary) !important;
-  background: #000;
+  background: #2b2a2a;
 }
 
 .link-special:hover {
-  box-shadow: var(--box-shadow-pill);
+  box-shadow: var(--box-shadow-cls);
   text-decoration: none !important;
 }
 
@@ -514,11 +594,6 @@ p code {
 .link-card:hover {
   transform: translateY(-2px);
   border-color: #aaa;
-}
-
-.warning {
-  color: #ff0000;
-  font-weight: 700;
 }
 
 .pill-group {
@@ -658,6 +733,25 @@ p code {
 .pill.urgent {
   background: #3a0f0f;
   color: #fecaca;
+}
+
+.heading-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.external_link::after {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 0.25em;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23173660'%3E%3Cpath d='M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  vertical-align: text-bottom;
 }
 
 /* =========================

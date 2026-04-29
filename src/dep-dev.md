@@ -3,6 +3,275 @@ layout: layouts/doc.njk
 title: Development
 ---
 
+## <img src="/assets/img/asterisk.svg" alt="" class="heading-icon" /> Network Dependency Graph (Draft)
+
+**The Network Dependency Graph** represents the full chain of resources required for a webpage to load and render, including all direct and indirect network requests made during the initial page load. <span class="tag k"></span> This includes HTML, CSS, JavaScript, fonts, images, third-party scripts, and any additional assets that are fetched as a result of those initial resources executing.
+
+Each resource can introduce further dependencies, meaning that one file may trigger additional requests, creating a cascading structure of network activity. In practice, this forms a graph-like relationship where the initial document is the root node, and every subsequent request becomes a dependent node connected through execution or reference. 
+
+Understanding this structure is important because it directly reflects how efficiently or inefficiently a page loads in real-world conditions. Even if individual assets are small or optimized in isolation, the way they are connected and requested can significantly affect performance. A deeply nested or overly fragmented dependency graph increases latency, as the browser must repeatedly resolve, request, and process resources before rendering the final page. <span class="tag x"></span> This can lead to delayed first paint, slower interactivity, and increased variability in performance across different network conditions. 
+
+Conversely, a shallow and well-structured dependency graph reduces the number of sequential requests required, allowing the browser to parallelize loading more effectively and reach a usable state faster. 
+
+From an optimization standpoint, the Network Dependency Graph is critical because it shifts the focus from individual file optimization to system-level loading behavior. <span class="tag k"></span> A page is not just the sum of its assets, but also the structure in which those assets are discovered and executed.
+
+Poor dependency design can negate the benefits of minification, compression, or caching, while a well-structured dependency graph can significantly improve performance even without aggressive optimization techniques.
+
+### Measurement
+
+**The Network Dependency Graph** can be analyzed using performance auditing tools that simulate how a browser loads and processes a page. One of the primary tools for this is **Lighthouse**, which is integrated into Chrome DevTools. <span class="tag t"></span>
+
+**Lighthouse** generates a performance report that includes a visual representation of the network activity during page load, showing how resources are requested, when they are discovered, and how long they take to load. This allows maintainers to observe not only which assets are being loaded, but also how they are interconnected through the loading process. 
+
+In addition to **Lighthouse**, Chrome DevTools’ Network tab provides a more granular, real-time view of all requests made by the page. It allows inspection of request timing, blocking behavior, and resource prioritization, making it possible to identify bottlenecks or unnecessary sequential dependencies.
+
+Together, these tools make it possible to reconstruct and understand the effective dependency graph as experienced by the browser, rather than as it is written in code. <span class="tag k"></span> This distinction is important, because the runtime dependency graph can differ significantly from the developer’s mental model due to dynamic imports, third-party scripts, and framework-level bundling behavior. 
+
+[Lighthouse Overview](https://developer.chrome.com/docs/lighthouse/overview/){.link-special} [Network features reference](https://developer.chrome.com/docs/devtools/network/reference/){.link-special}
+
+[PageSpeed Insight](https://pagespeed.web.dev/){.link-special}
+
+### Optimization
+
+Optimizing the **Network Dependency Graph** involves reducing unnecessary complexity in how resources are discovered, loaded, and executed. The primary goal is to minimize chained or sequential dependencies so that the browser can retrieve and render critical resources as early and efficiently as possible. <span class="tag k"></span> This often involves reducing reliance on runtime-loaded scripts that trigger further network requests, and instead favoring build-time resolution of dependencies where possible. 
+
+Another important principle is controlling resource criticality, ensuring that only essential assets are required for the initial render, while non-critical resources are deferred or lazy-loaded. This reduces the initial depth of the dependency graph and allows the page to reach an interactive state more quickly. 
+
+It is also important to avoid redundant or duplicated dependencies, as repeated imports or overlapping libraries can artificially inflate the graph and increase network overhead without providing functional benefit. <span class="tag x"></span>
+
+[Critical Rendering Path](https://web.dev/articles/critical-rendering-path){.link-special} [Eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources){.link-special}
+
+[Lazy Loading](https://web.dev/articles/browser-level-image-lazy-loading){.link-special} [Code Splitting](https://web.dev/articles/reduce-javascript-payloads-with-code-splitting){.link-special}
+
+#### Lazy Loading
+
+Lazy loading is a performance optimization technique where resources are not loaded immediately when a page starts, but instead are deferred until they are actually needed. <span class="tag k"></span> In the context of the Network Dependency Graph, it directly reduces the initial number of nodes in the graph by postponing the creation of certain branches until user interaction or viewport visibility triggers them.
+
+Instead of treating all assets as part of the initial dependency chain, lazy loading effectively splits the graph into a “critical” portion (needed for first render) and a “deferred” portion (loaded on demand).
+
+In practical terms, lazy loading is most commonly applied to images, non-critical components, and secondary JavaScript modules. The browser is instructed to skip fetching these resources until certain conditions are met, such as scrolling, clicking, or route changes in single-page applications.
+
+For images, modern browsers support native lazy loading using the `loading="lazy"` attribute:
+
+```html
+<img src="/images/example.jpg" loading="lazy" alt="Example image">
+```
+
+This tells the browser not to request the image until it is close to entering the viewport. It is the simplest and most effective form of lazy loading because it requires no JavaScript and integrates directly with the browser’s rendering engine.
+
+Lazy loading is also commonly applied to UI elements that are not immediately visible or required, such as modals, secondary panels, or feature-heavy sections. These are only fetched or initialized when the user actually triggers them.
+
+```js
+button.addEventListener("click", async () => {
+  const module = await import("./feature.js");
+  module.init();
+});
+```
+This pattern ensures that the resource does not participate in the initial dependency graph and is only introduced when needed.
+
+However, lazy loading must be used deliberately. If too many resources are deferred without structure, the application can feel responsive initially but become inconsistent during interaction as multiple hidden requests fire at once. <span class="tag x"></span> This often results in sudden network spikes or delayed responses when users engage with features for the first time.
+
+A well-structured lazy loading strategy therefore focuses on balancing initial render speed with predictable on-demand loading. Critical above-the-fold resources should remain part of the initial graph, while secondary or conditional resources are safely deferred. 
+
+#### Code Splitting
+
+Code splitting is a build-time optimization technique where the application is divided into smaller, independently loadable bundles instead of being delivered as a single large JavaScript payload. <span class="tag k"></span> In the context of the Network Dependency Graph, this changes the structure of the initial graph itself by reducing the size of the root bundle and introducing multiple potential branches that can be loaded separately.
+
+Unlike lazy loading, which controls when a resource is fetched at runtime, code splitting defines how the codebase is partitioned before it ever reaches the browser. The goal is to avoid forcing the browser to download and parse unnecessary code for routes, features, or components that are not immediately required.
+
+In modern tooling such as Vite, code splitting is largely automatic when dynamic imports are used. Any module imported via import() becomes a separate chunk in the output bundle:
+
+```js
+const module = await import("./feature.js");
+```
+
+<span class="tag k"></span> At build time, this instruction tells the bundler to isolate feature.js into its own file. During runtime, that file is only requested when the import expression is executed, meaning it no longer contributes to the initial payload or blocking dependency chain.
+
+From a network perspective, this transforms a single heavy request into multiple smaller, conditional requests. The initial dependency graph becomes shallower, while secondary nodes are only introduced based on execution paths. This improves initial load performance but also distributes network cost more evenly across user interaction.
+
+In component-based architectures, code splitting is often applied at the route level. Each route becomes its own entry point, ensuring that users only download what is required for the current view.
+
+```js
+const Home = await import("./pages/Home.js");
+const About = await import("./pages/About.js");
+```
+
+However, code splitting is not automatically beneficial in every situation. Over-splitting can lead to excessive small chunks, increasing request overhead and potentially harming performance on high-latency networks. <span class="tag x"></span> If too many boundaries are created, the browser may spend more time resolving and fetching modules than executing meaningful application logic.
+
+he objective is to reduce unnecessary initial load without fragmenting the application into inefficient micro-chunks.
+
+#### \<picture> element
+
+The `<picture>` element is a native HTML feature that allows the browser to choose between multiple image sources based on conditions such as screen size, resolution, or supported formats. <span class="tag k"></span> Instead of delivering a single fixed image, it enables the browser to select the most appropriate asset at request time, reducing unnecessary bandwidth usage and improving rendering efficiency.
+
+In the context of the Network Dependency Graph, <picture> prevents redundant image downloads by ensuring that only one optimized resource is fetched per rendering condition. This reduces overall network cost while improving perceived performance, especially on mobile devices or slow connections.
+
+A typical use case is serving different image sizes for different viewport widths:
+
+```html
+<picture>
+  <source srcset="/images/hero-large.jpg" media="(min-width: 1024px)">
+  <source srcset="/images/hero-medium.jpg" media="(min-width: 640px)">
+  <img src="/images/hero-small.jpg" alt="Hero image">
+</picture>
+```
+In this structure, the browser evaluates media conditions and selects the first matching source. Only that selected file becomes part of the active network request chain. This prevents smaller devices from downloading unnecessarily large assets, which would otherwise increase initial load time and memory usage.
+
+Another important use case is ***format negotiation***. Modern image formats such as WebP or AVIF can significantly reduce file size compared to traditional JPEG or PNG formats. <picture> allows fallback-based delivery depending on browser support:
+
+```html
+<picture>
+  <source srcset="/images/photo.avif" type="image/avif">
+  <source srcset="/images/photo.webp" type="image/webp">
+  <img src="/images/photo.jpg" alt="Optimized image">
+</picture>
+```
+
+This ensures that the most efficient format is used when available, while still maintaining compatibility for older browsers. From a dependency perspective, this avoids unnecessary fallback chains and ensures only one asset is fetched.
+
+#### Preloading and Preconnecting Critical Resources
+
+Modern pages often depend on external resources such as fonts, CDNs, analytics scripts, or third-party APIs. These dependencies are not always part of the main application code, but they still affect the initial network path and can introduce hidden latency. <span class="tag k"></span>
+
+Two low-level techniques used to reduce this latency are preloading and preconnecting, both of which influence how the browser prepares the Network Dependency Graph before actual requests are made.
+
+##### Preloading critical fonts
+
+Fonts are a common source of render delay because they are required for text rendering but are often discovered late in the loading process. Without optimization, the browser may first render with a fallback font and then swap once the real font arrives, or worse, delay rendering entirely depending on configuration.
+
+Preloading allows the browser to fetch font files earlier in the network lifecycle, making them available before they are strictly needed for rendering.
+
+```html
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+This explicitly tells the browser that the font is a high-priority resource. It is pulled into the early part of the dependency graph instead of being discovered later through CSS parsing.
+
+However, preloading fonts must be used carefully. Overusing it or preloading unused font weights can increase bandwidth usage and degrade performance instead of improving it. <span class="tag x"></span>
+
+<div class="caution">
+<img src="/assets/img/frame_exclamation.svg">
+
+The `@import` rule in CSS allows stylesheets to load other stylesheets, but it introduces a hidden and delayed dependency chain that negatively affects performance. <span class="tag k"></span> Unlike <link> elements in HTML, which are discovered early in the document parsing phase, `@import` statements are only resolved after the initial CSS file has been fetched and parsed.
+
+This creates a sequential loading pattern where stylesheets are blocked behind other stylesheets, effectively deepening the Network Dependency Graph in an unnecessary and unpredictable way.
+
+```css
+@import url("/styles/extra.css");
+```
+In this model, the browser cannot begin fetching the imported file until it has already downloaded and processed the parent stylesheet. This delays rendering and prevents parallelization of network requests.
+
+</div>
+
+##### Preconnecting to external origins
+
+Many performance bottlenecks are not caused by the resource itself, but by the connection setup phase before the resource is even requested. This includes DNS lookup, TCP handshake, and TLS negotiation.
+
+Preconnecting allows the browser to perform these steps early for known external origins, effectively warming up the connection before the actual request happens.
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+This is especially important for services like Google Fonts, where the stylesheet and font files are served from different domains. Without preconnect, the browser must establish multiple connections only after discovering the requests, which delays the dependency graph traversal.
+
+From a network perspective, preconnect reduces the “startup cost” of external nodes in the graph, making subsequent requests faster and more predictable. 
+
+#### DNS prefetch
+
+In cases where full preconnection is too aggressive, DNS prefetch can be used as a lighter optimization. It only resolves the domain name early without establishing a full connection.
+
+```html
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+```
+This is less powerful than preconnect but also less resource-intensive. It is useful when you want minimal overhead but still want to reduce initial lookup delays. <span class="tag k"></span>
+
+#### Render-Blocking CSS
+
+CSS is inherently render-blocking because the browser must construct the full CSSOM (CSS Object Model) before it can safely render the page. <span class="tag k"></span> This behavior exists to prevent “flash of unstyled content,” but it also means that any CSS included in the critical path directly delays first paint.
+
+In terms of the Network Dependency Graph, render-blocking CSS acts as a gatekeeper node: the browser will not proceed to layout and paint until it has discovered, downloaded, and processed all required stylesheets for the initial render. If a stylesheet is large, slow to download, or contains unnecessary rules, it increases the time before the page becomes visible.
+
+A typical blocking stylesheet looks like this:
+
+```html
+<link rel="stylesheet" href="/styles/main.css">
+```
+When the browser encounters this during HTML parsing, it pauses rendering until the CSS file is fully downloaded and parsed. This is why CSS in the critical path has a disproportionate impact on performance compared to many other asset types.
+
+One of the most common performance issues is shipping a single large global stylesheet that contains rules for the entire application, regardless of whether they are needed for the initial view. <span class="tag x"></span> This inflates the render-blocking surface area and forces the browser to process unused styles before it can display anything.
+
+A more optimized approach is to separate critical and non-critical styles. Critical CSS contains only what is needed for above-the-fold content, while non-critical CSS is loaded after initial render.
+
+One way to improve loading behavior is to preload stylesheets so they are discovered earlier in the dependency graph:
+
+```html
+<link rel="preload" href="/styles/main.css" as="style">
+<link rel="stylesheet" href="/styles/main.css">
+```
+
+This helps reduce discovery delay, but it does not remove the blocking nature of CSS itself. The browser still waits for the stylesheet before rendering, but it begins fetching it earlier, which reduces idle time in the critical path.
+
+#### <img src="/assets/img/asterisk.svg" alt="" class="heading-icon" /> HTTP Caching
+
+HTTP caching is a mechanism that allows the browser to store and reuse previously downloaded resources instead of requesting them again from the server. <span class="tag k"></span> In the context of the Network Dependency Graph, caching effectively collapses previously traversed nodes on repeat visits, meaning the graph does not need to be rebuilt from scratch every time a user returns to a page.
+
+Instead of treating every page load as a full network traversal, caching introduces the concept of reused dependencies, where assets such as JavaScript bundles, stylesheets, fonts, and images can be served directly from local storage. This significantly reduces latency, server load, and total network transfer cost, especially for assets that do not change frequently.
+
+At the core of HTTP caching is the Cache-Control header, which defines how and for how long a resource can be stored by the browser:
+
+```
+Cache-Control: public, max-age=31536000, immutable
+```
+
+In this example, the resource is marked as cacheable for a long duration (one year). The immutable directive indicates that the file will not change during that period, allowing the browser to skip revalidation entirely.
+
+When caching is properly configured, subsequent page loads no longer need to re-fetch these resources over the network. Instead, the browser resolves them locally, effectively removing entire branches from the active dependency graph. This leads to dramatically faster repeat visits and reduced network variability across sessions.
+
+Another important aspect is cache invalidation strategy. Since long-lived caching can lead to stale assets, modern workflows typically use content-based hashing in filenames:
+
+```
+app.8f3a91.js
+styles.a12d9c.css
+```
+
+When the content changes, the hash changes, forcing the browser to treat it as a new resource. This allows aggressive caching without risking outdated files being served.
+
+From a system perspective, caching is one of the most effective optimizations because it does not just improve performance, it fundamentally reduces the amount of work the network has to do on repeat interactions.
+
+<hr>
+
+One important clarification is that HTTP caching is not a frontend technique in itself. <span class="tag k"></span> While it directly affects how the browser behaves, the rules that control caching are almost entirely defined by the server (or CDN) through HTTP response headers. The frontend only benefits from it; it does not configure it at runtime.
+
+In other words, caching is not something you “implement in JavaScript or HTML”.
+
+In a traditional Apache setup, caching behavior is controlled through response headers set in the server configuration or `.htaccess` file. These headers determine whether a resource can be cached, for how long, and under what conditions it must be revalidated.
+
+```
+<FilesMatch "\.(js|css|png|jpg|woff2)$">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+```
+
+This tells the browser that these asset types are safe to store locally for a long period and do not need to be revalidated on subsequent visits.
+
+If caching headers are missing or misconfigured, no amount of frontend optimization (lazy loading, code splitting, or preloading) can prevent the browser from repeatedly re-downloading the same assets.
+
+This is also why caching is often one of the highest-impact performance optimizations available.
+
+<div class="important">
+<img src="/assets/img/bolt.svg" />
+
+Because caching is controlled server-side and can persist for long durations, it must be paired with a safe invalidation strategy. The most common approach is ***content-based fingerprinting***, where file names change when content changes:
+
+```
+app.3f91c2.js
+app.91bd44.js
+```
+
+When the filename changes, the browser treats it as a completely new resource, even if long-term caching is enabled. This allows aggressive caching rules without risking stale or broken assets being served
+
+</div>
+
 ## Accessibility
 
 **Accessibility** means designing and building the website so that everyone can use it, including people with disabilities. This includes users who rely on screen readers, keyboard navigation, voice control, or other assistive technologies.
@@ -493,7 +762,7 @@ For additional configuration options and advanced usage, refer to the documentat
 
 [Official Dependabot Documentation](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file){.link-special}
 
-## Vite Bundling
+## <img src="/assets/img/asterisk.svg" alt="" class="heading-icon" /> Vite Bundling
 
 The build system uses Vite strictly as a **bundler**. That means it takes your raw project files and turns them into a final, optimized version that a browser can load efficiently.
 
@@ -757,6 +1026,7 @@ Finally, the workflow uploads two artifacts:
 2. A backup artifact (dist-backup-${{ github.sha }}), which preserves a versioned snapshot of that build for historical reference and rollback purposes
 
 <div class="note">
+<img src="/assets/img/notes.svg" />
 
 Each workflow run executes in a clean, isolated environment. This means no files or dependencies persist between runs unless explicitly restored or cached.
 
@@ -765,3 +1035,128 @@ The workflow does not currently include deployment automation. Instead, it produ
 Workflow chaining and advanced orchestration (such as separate validation or performance workflows) are not used in this setup. All checks are currently centralized within this single build pipeline for simplicity and predictability.
 
 </div>
+
+## Google Material Icons
+
+All icons used on the website are sourced from <a href="" class="external_link">Google Material Icons</a>. For consistency across the site, maintainers should use icons from this library whenever possible.
+
+These icons can be used by connecting to their Google API server, but this approach is discourged to reduce <a herf="" class="external_link"> Network Dependency Graph. </a>
+
+Check the section explaining this optimization in details.
+
+[Network Dependency Graph](#network-dependency-graph){.link-card}
+
+Icons should be used by downloading the SVG files (*.svg) or embedding them directly in HTML or CSS (e.g., using an SVG encoder). Prefer embedding SVGs directly in HTML, as browsers are highly optimized for rendering inline SVG content.
+
+<div class="caution">
+<img src="/assets/img/frame_exclamation.svg" />
+
+Using them as files does not have any disadventage other than browser fetching those files, and downloading them. This obviously introduces the risks of incomplete downloads upon slow network or failure, but this is not a big issue.
+
+</div>
+
+These icons come in three flavors: **Outlined**, **Rounded**, and **Sharp**.  
+
+The icons currently used across the site are all `Outlined`, with a default size of `24px`.
+
+Outlined icons are not filled, which means some may benefit from being paired with `padding` and `background-color`. Avoid assigning arbitrary colors to icons or their backgrounds unless they are tied to design tokens or serve a clear UI purpose.
+
+All icons should be properly aligned and visually centered. The following are common CSS styles used to achieve this.
+
+1. Inline with text
+```css
+.material-icons {
+  font-size: 24px;
+  vertical-align: middle;
+}
+```
+
+2. Flexbox alignment
+```css
+.icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px; /* space between icon and text */
+}
+```
+
+3. Icon inside a square / cirlce
+```css
+.icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+```
+
+When icons are purely decorative (which is most of the time), make sure to include `aria-hidden="true"` so they are ignored by screen readers.
+
+If an icon conveys meaning, provide an accessible label:
+
+```html
+<span class="material-icons" aria-label="Search">search</span>
+```
+
+Icons should be used as defined in the Google Material Icons library. If a perfectly matching icon is not available, maintainers may use an icon that is reasonably close in meaning, as long as it does not introduce confusion or misrepresent the intended action.
+
+If no suitable icon exists, prefer using clear text labels instead, or adjust the UI so the meaning is communicated without relying on an icon.
+
+<div class="warning">
+<img src="/assets/img/not.svg">
+
+Under no circumstances should custom icons be created, modified, or substituted to represent a missing symbol. This includes manually drawing icons, combining existing icons, or visually altering icons to imply new meanings.
+</div>
+
+## <img src="/assets/img/asterisk.svg" alt="" class="heading-icon" /> Backup
+
+It is important to note that build artifacts (build bundles and generated output files hosted on the server) are not intended to be backed up. These files are optimized, minified, and automatically generated during the build process.
+
+The actual source of truth for backups is the source code repository.
+
+The following folders and files should be ignored for backup:
+
+- `node_modules/` -
+This folder contains all installed project dependencies. It can be fully regenerated from `package.json` and `package-lock.json` (or `pnpm-lock.yaml` / `yarn.lock`, depending on the package manager in use). It is not required for backup and can often take up significant disk space (sometimes multiple gigabytes).
+
+- `dist/` -
+This is the production build output generated by Vite. It is fully reproducible using the build command and should never be backed up or committed.
+
+- `dist-ssr/` (if present) -
+Server-side rendering build output, also fully generated during build.
+
+- `.vite/` -
+Temporary Vite cache used during development and build processes. It is safe to delete and regenerate at any time.
+
+<div class="check-alert">
+<img src="/assets/img/check-alert.svg">
+
+Although the source code is stored in a GitHub repository, it is STILL mandatory to maintain a local copy of the latest commit on the development machine.
+
+When pushing changes to the repository, a local working copy should always be kept in sync with the remote state. This ensures that development can continue even in cases of repository downtime, accidental deletion, or access issues.
+
+Additionally, local backups or mirrored copies of the repository may be maintained as a precaution against data loss or unintended repository changes.
+
+</div>
+
+### Backup Schedule
+
+Backups should be performed regularly to ensure that the latest working state of the project is always recoverable.
+
+A backup is required in the following situations:
+
+- After completing a meaningful set of changes or a feature implementation
+- Before merging major changes into the main branch
+- Before making structural or breaking changes to the codebase
+- After resolving significant bugs or refactors
+Before performing any risky or irreversible operations
+
+In general, at minimum, a backup should reflect the latest stable commit state of the repository.
+
+There is no fixed time-based interval for backups (e.g., daily or weekly). Instead, backups are event-driven and tied to development milestones.
+
+However, maintainers should ensure that no more than a small number of changes accumulate without being committed and backed up. Long periods without synchronization to the repository are discouraged.
+
+In short, ***if the state of the project changes in a meaningful way, it should be backed up.***

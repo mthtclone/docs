@@ -44,6 +44,12 @@
   --box-shadow-cls: inset 0px 22px 20px -6px rgba(255, 255, 255, 0.04);
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family:
@@ -52,7 +58,8 @@ body {
     Segoe UI,
     Arial,
     sans-serif;
-  background: var(--color-bg);
+    height: 100vh;
+  background: linear-gradient(225deg, #8a7a5a 0.000%, #1e3037 16.667%, #000012 33.333%, #000000 50.000%, #000000 66.667%, #301200 83.333%, #995e00 100.000%);
   color: var(--color-text-primary);
   line-height: 1.6;
 }
@@ -105,9 +112,13 @@ body {
   gap: 8px;
   padding: 12px;
   border: 1px solid var(--color-border);
-  border-radius: 10px;
   text-decoration: none;
   color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0);
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   transition: 0.15s ease;
 }
 
@@ -118,6 +129,14 @@ body {
 
 .links a:hover {
   box-shadow: var(--box-shadow-cls);
+}
+
+.sub-trees a {
+  background: rgba(255, 255, 255, 0);
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .sub-trees a:hover {
@@ -135,6 +154,33 @@ body {
   font-size: 0.85rem;
   color: var(--color-text-secondary);
   line-height: 1.4;
+}
+
+.info-thx {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  color: var(--color-text-secondary);
+
+  max-width: 220px;
+}
+
+.info-thx p {
+  margin: 0;
+}
+
+.info-thx p:first-child {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.info-thx p:last-child {
+  font-size: 11px;
+  color: var(--color-text-muted);
 }
 
 @media (max-width: 800px) {

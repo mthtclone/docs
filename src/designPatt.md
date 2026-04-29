@@ -1,5 +1,5 @@
 ---
-title: Navigation Flow
+title: Design Pattern
 layout: layouts/doc.njk
 ---
 

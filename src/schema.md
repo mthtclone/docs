@@ -144,6 +144,8 @@ FAQ data is intentionally localized to the page level and is not part of the glo
 <hr>
 
 <div class="note">
+<img src="/assets/img/notes.svg" />
+
 These schemas are extensive and cannot be fully covered in a single document. For implementation of new or advanced schema types, it is strongly recommended to regularly refer to the official documentation.
 </div>
 

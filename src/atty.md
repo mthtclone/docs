@@ -3,7 +3,7 @@ layout: layouts/doc.njk
 title: Accessibility
 ---
 
-## Semantics
+## <img src="/assets/img/asterisk.svg" alt="" class="heading-icon" /> Semantics
 
 Semantic structure is the foundation of web accessibility. It allows assistive technologies (like screen readers) to understand the structure and meaning of a page without relying on visual layout.
 
@@ -377,7 +377,7 @@ Skip links can be visually hidden by default, but must become visible when focus
 }
 ```
 
-## Remember this rule..
+## <img src="/assets/img/asterisk.svg" alt="" class="heading-icon" /> Remember this rule..
 
 Partial or incorrect use of ARIA roles is worse than not using ARIA at all.
 
