@@ -3,4 +3,4 @@ title: Navigation Flow
 layout: layouts/doc.njk
 ---
 
-*A cat slips by and eats up all the content.*
+_A cat slips by and eats up all the content._

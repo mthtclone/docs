@@ -10,7 +10,7 @@ module.exports = function (eleventyConfig) {
   const md = markdownIt({
     html: true,
     linkify: true,
-    typographer: true
+    typographer: true,
   })
     .use(markdownItAnchor, {
       permalink: markdownItAnchor.permalink.linkInsideHeader({

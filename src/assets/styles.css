@@ -58,8 +58,17 @@ body {
     Segoe UI,
     Arial,
     sans-serif;
-    height: 100vh;
-  background: linear-gradient(225deg, #8a7a5a 0.000%, #1e3037 16.667%, #000012 33.333%, #000000 50.000%, #000000 66.667%, #301200 83.333%, #995e00 100.000%);
+  height: 100vh;
+  background: linear-gradient(
+    225deg,
+    #8a7a5a 0%,
+    #1e3037 16.667%,
+    #000012 33.333%,
+    #000000 50%,
+    #000000 66.667%,
+    #301200 83.333%,
+    #995e00 100%
+  );
   color: var(--color-text-primary);
   line-height: 1.6;
 }

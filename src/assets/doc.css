@@ -66,7 +66,16 @@ body {
   margin: 0;
   font-family: system-ui;
   color: var(--color-text-primary);
-  background: linear-gradient(225deg, #8a7a5a 0.000%, #1e3037 16.667%, #000012 33.333%, #000000 50.000%, #000000 66.667%, #301200 83.333%, #995e00 100.000%);
+  background: linear-gradient(
+    225deg,
+    #8a7a5a 0%,
+    #1e3037 16.667%,
+    #000012 33.333%,
+    #000000 50%,
+    #000000 66.667%,
+    #301200 83.333%,
+    #995e00 100%
+  );
   line-height: 1.6;
 }
 
@@ -528,17 +537,38 @@ p code {
 }
 
 /* Labels */
-.tag.k::before { content: "Key Idea"; }
-.tag.w::before { content: "Why It Matters"; }
-.tag.x::before { content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23FFFFFF'%3E%3Cpath d='M440-400v-360h80v360h-80Zm0 200v-80h80v80h-80Z'/%3E%3C/svg%3E"); }
-.tag.p::before { content: "In Practice"; }
-.tag.t::before { content: "Tooling"; }
+.tag.k::before {
+  content: 'Key Idea';
+}
+.tag.w::before {
+  content: 'Why It Matters';
+}
+.tag.x::before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23FFFFFF'%3E%3Cpath d='M440-400v-360h80v360h-80Zm0 200v-80h80v80h-80Z'/%3E%3C/svg%3E");
+}
+.tag.p::before {
+  content: 'In Practice';
+}
+.tag.t::before {
+  content: 'Tooling';
+}
 
-.tag.k::before { background: #3730a3; } /* indigo */
-.tag.w::before { background: #065f46; } /* green */
-.tag.x::before { background: #991b1b; padding: 0; } /* red */
-.tag.p::before { background: #075985; } /* blue */
-.tag.t::before { background: #5b21b6; } /* purple */
+.tag.k::before {
+  background: #3730a3;
+} /* indigo */
+.tag.w::before {
+  background: #065f46;
+} /* green */
+.tag.x::before {
+  background: #991b1b;
+  padding: 0;
+} /* red */
+.tag.p::before {
+  background: #075985;
+} /* blue */
+.tag.t::before {
+  background: #5b21b6;
+} /* purple */
 
 .link-primary {
   display: inline-flex;
@@ -741,7 +771,7 @@ p code {
 }
 
 .external_link::after {
-  content: "";
+  content: '';
   display: inline-block;
   width: 1em;
   height: 1em;
