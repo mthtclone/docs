@@ -631,6 +631,82 @@ p code {
   height: 30px;
 }
 
+.issue-tag {
+  color: #2383e9 !important;
+  text-decoration: none;
+  font-weight: 600;
+  padding-bottom: 1px;
+}
+
+.issue-tag.archived {
+  color: #ffe32e;
+  border-bottom: 1px dotted #ffe32e;
+}
+
+.issue-tag:hover {
+  color: #c0c0c0;
+}
+
+.issue-merge {
+  display: inline;
+  color: #87a6d9 !important;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dotted #9ca3af;
+}
+
+.build-success,
+.build-failed {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 8px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.build-success {
+  background-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.15);
+}
+
+.build-failed {
+  background-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+}
+
+.build-success:hover::after {
+  content: "Build passed";
+  position: absolute;
+  margin-left: 10px;
+  font-size: 0.75rem;
+  color: #16a34a;
+}
+
+.build-failed:hover::after {
+  content: "Build failed";
+  position: absolute;
+  margin-left: 10px;
+  font-size: 0.75rem;
+  color: #dc2626;
+}
+
+.branch-tag {
+  display: inline-block;
+  margin-left: 8px;
+
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  color: #475569;
+  background: #f1f5f9;
+
+  padding: 2px 6px;
+  border-radius: 4px;
+
+  border: 1px solid #e2e8f0;
+}
+
 .external_link::after {
   content: '';
   display: inline-block;

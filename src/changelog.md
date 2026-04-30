@@ -19,7 +19,45 @@ Changes/commits for the internal documentation itself does not belong here.
 
 ---
 
-# Jan 30, 2026
+## April 29, 2026 
+
+<div class="branch-tag">direct on main</div>
+
+- <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/commit/37fee423289c51aa7a4525efa8c8458ba09c5783"> fix: format HTML files and with Prettier </a> <span class="build-success"></span>  
+
+<div class="branch-tag">direct on main</div>
+
+- <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/commit/b903d96d6fd82c4872f2863fae090c727e512731"> fix: npm ci failure caused by mismatched package-lock.json and transitive dependencies and remove vendor/ from git tracking</a>  <span class="build-failed"></span>
+
+<div class="branch-tag">from experimental -> on main</div>
+
+- <a class="issue-merge" href="https://github.com/ILC-IT-department/ILC-Website/commit/c53cd3753319d38f932a3840f94ebc405073c4b5"> Merge pull request #55 from ILC-IT-department/experimental </a>  <span class="build-failed"></span>
+    - Refer to Pull Request <a href="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/pull/55"> "4/29/2026/ batch update" #55 </a>
+
+---
+<div class="branch-tag"> on experimental </div>
+
+[Batch Update] <span class="build-failed"></span>
+- Make a custom redirect page for form confirmation <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/8">issue #8</a>
+- Refine navbar.vue with secondary navbar (this is version 1) <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/23">issue #23</a>
+- Breadcrumb Navigation <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/34">issue #34</a>
+- Make a general README file for the repository <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/35">issue #35</a>
+- Create a separate layout/design for UFY page specifically <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/36">issue #36</a>
+- Add default WIP page for incomplete pages <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/37">issue #37</a>
+- Setup ESLint and Prettier for code quality and formatting <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/38">issue #38</a>
+- Setup pre-commit hooks (Husky + lin-staged) to enforce code quality <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/39">issue #39</a>
+- Setup automated dependency updates using Dependabot <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/40">issue #40</a>
+- Accessibility and WAI-ARIA Compliance <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/41">issue #41</a>
+- Build custom dropdown web component for admission form <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/43">issue #43</a>
+- CSS Tokenization and Design Formalization <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/46">issue #46</a>
+- Replace Rubik with Inter for consistent typography in UI headings (archived) <a class="issue-tag archived" href="https://github.com/ILC-IT-department/ILC-Website/issues/46">issue #48</a>
+- Split Admission Flow and Move Application Form to Dedicated Page <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/49">issue #49</a>
+- Draft Accessibility Statement and Footer Improvements <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/52">issue #52</a>
+- Prefer System Fonts over League Spartan for Readability in Body Text <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/54">issue #54</a>
+
+---
+
+## Jan 30, 2026
 
 - Fix broken /home.html link in navbar
 - Correct phone number on Contact Us page
