@@ -17,6 +17,23 @@ Changes/commits for the internal documentation itself does not belong here.
 > Implementation details are available in the source code.  
 > Repository history and issue records are maintained under the **[ILC-Website Project](https://github.com/ILC-IT-department/ILC-Website)**.
 
+<details class="archived-accordion">
+  <summary>Archived Issues</summary>
+
+  <ul>
+    <li>
+      Replace Rubik with Inter for consistent typography in UI headings
+      <a class="issue-tag archived" href="https://github.com/ILC-IT-department/ILC-Website/issues/48">#48</a>
+    </li>
+
+    <li>
+      Prefer System Fonts over League Spartan for Readability in Body Text
+      <a class="issue-tag archived" href="https://github.com/ILC-IT-department/ILC-Website/issues/54">#54</a>
+    </li>
+
+  </ul>
+</details>
+
 ---
 
 ## April 29, 2026 
@@ -50,10 +67,10 @@ Changes/commits for the internal documentation itself does not belong here.
 - Accessibility and WAI-ARIA Compliance <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/41">issue #41</a>
 - Build custom dropdown web component for admission form <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/43">issue #43</a>
 - CSS Tokenization and Design Formalization <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/46">issue #46</a>
-- Replace Rubik with Inter for consistent typography in UI headings (archived) <a class="issue-tag archived" href="https://github.com/ILC-IT-department/ILC-Website/issues/46">issue #48</a>
+- Replace Rubik with Inter for consistent typography in UI headings (ARCHIVED) <a class="issue-tag archived" href="https://github.com/ILC-IT-department/ILC-Website/issues/46">issue #48</a>
 - Split Admission Flow and Move Application Form to Dedicated Page <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/49">issue #49</a>
 - Draft Accessibility Statement and Footer Improvements <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/52">issue #52</a>
-- Prefer System Fonts over League Spartan for Readability in Body Text <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/54">issue #54</a>
+- Prefer System Fonts over League Spartan for Readability in Body Text (ARCHIVED) <a class="issue-tag" href="https://github.com/ILC-IT-department/ILC-Website/issues/54">issue #54</a>
 
 ---
 

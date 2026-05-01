@@ -12,41 +12,6 @@
 
 <body>
   <div id="backdrop"></div>
-  <header>
-    <nav>
-      <button id="menu-toggle">
-        <img src="/assets/img/chevron.svg" alt="Tog">
-      </button>
-
-      <div class="logo">
-          <a href="/">
-            <img src="/assets/img/ilc_logo.png" alt="International Leadership College">
-          </a>
-        </div>
-
-      <div class="InputContainer">
-        <input
-          placeholder="Search ⌘K"
-          id="input"
-          class="input"
-          name="text"
-          type="text"
-        />
-
-        <label class="labelforsearch" for="input">
-          <svg class="searchIcon" viewBox="0 0 512 512">
-            <path
-              d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-            ></path>
-          </svg>
-        </label>
-
-        <div id="search-results" class="search-results"></div>
-      </div>
-
-
-    </nav>
-  </header>
 
   <div class="doc-page">
 
@@ -67,6 +32,7 @@
           <li><a href="/atty/">Accessibility</a></li>
           <li><a href="/schema/">Schema</a></li>
           <li><a href="/site-policies/">Site Policies</a></li>
+          <li><a href="/misc/">Misc</a></li>
         </ul>
       </div>
     </aside>
@@ -95,8 +61,6 @@
 
 </body>
 <script type="module">
-  import * as pagefind from "/pagefind/pagefind.js";
-
   const btn = document.getElementById("menu-toggle");
   const sidebar = document.querySelector(".sidebar");
   const rightSidebar = document.querySelector(".right-sidebar");
@@ -126,120 +90,6 @@
   });
 
   backdrop.addEventListener("click", closeAll);
-
-  const container = document.querySelector(".InputContainer");
-  const input = document.getElementById("input");
-  const results = document.getElementById("search-results");
-    
-  const openSearch = () => {
-    results.classList.add("active");
-    container.classList.add("focused");
-
-    input.value = "";
-    input.focus();
-
-    results.innerHTML = `
-      <div class="search-empty">
-        <div class="search-title">Start typing to search docs</div>
-        <div class="search-excerpt"></div>
-      </div>
-    `;
-  };
-
-  const closeSearch = () => {
-    results.classList.remove("active");
-    container.classList.remove("focused");
-    results.innerHTML = "";
-  };
-
-  async function runSearch(query) {
-    if (!query) {
-      results.innerHTML = "";
-      results.classList.remove("active");
-      return;
-    }
-
-    const search = await pagefind.search(query);
-
-    const items = await Promise.all(
-      search.results.slice(0, 6).map((r) => r.data())
-    );
-
-    if (!items.length) {
-      results.innerHTML = `
-        <div class="search-empty">
-          <div class="search-title">No results found</div>
-          <div class="search-excerpt">
-            Try different keywords or check spelling
-          </div>
-        </div>
-      `;
-
-      results.classList.add("active");
-      return;
-    }
-
-    results.innerHTML = items
-      .map((item) => {
-        const title = item.meta?.title ?? "Untitled";
-
-        const subtitle = item.sub_results?.[0]?.title || null;
-        const subtitleExcerpt = item.sub_results?.[0]?.excerpt || null;
-
-        const href = item.sub_results?.[0]?.url || item.url;
-
-        return `
-          <a class="search-item" href="${href}">
-            <div class="search-title">${title}</div>
-
-            ${
-              subtitle
-                ? `<div class="search-subtitle">${subtitle}</div>`
-                : ""
-            }
-
-            ${
-              subtitleExcerpt
-                ? `<div class="search-excerpt">${subtitleExcerpt}</div>`
-                : ""
-            }
-          </a>
-        `;
-      })
-      .join("");
-
-    results.classList.add("active");
-  }
-
-  // keyboard shortcuts
-  document.addEventListener("keydown", (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-      e.preventDefault();
-      openSearch();
-    }
-
-    if (e.key === "Escape") {
-      closeSearch();
-      input.blur();
-    }
-  });
-
-  // click outside
-  document.addEventListener("click", (e) => {
-    const container = document.querySelector(".InputContainer");
-
-    if (!container.contains(e.target)) {
-      closeSearch();
-    }
-  });
-
-  // input handler
-  input.addEventListener("input", (e) => {
-    if (e.target.value) {
-      results.classList.add("active");
-    }
-    runSearch(e.target.value);
-  });
 </script>
 <script src="../../assets/js/prism.js" defer>
   Prism.highlightAll();
